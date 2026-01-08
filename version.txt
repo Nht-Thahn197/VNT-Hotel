@@ -1,0 +1,13 @@
+Version 1.4:
+  - Trang Home:
+   + Xem trang web trước khi đăng nhập
+   + Làm thêm các thông báo
+   + Làm đặt dịch vụ
+   + Làm thanh toán QR(Thành)
+  - Trang Admin:
+   + xem doanh thu theo ngày, tháng, năm
+   + Làm service(Thành)
+   + Tính thời gian check in, check out theo thời gian của khách hàng
+   + Hiển thị phòng theo type room để chọn cho khách
+   + Thay đổi trạng thái của phòng sau khi chọn
+   + Ẩn các phòng đã đc chọn
