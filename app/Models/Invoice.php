@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class Invoice extends Model
 {
     use HasFactory;
-    protected $table = 'invoices';
+    protected $table = 'invoice';
     protected $fillable = ['status'];
     public $timestamps = false;
 
@@ -18,11 +18,11 @@ class Invoice extends Model
 
     public function index(){
         // Query lay du lieu
-        $invoices = DB::table('invoices')
-            ->join('customers', 'invoices.cus_id', '=', 'customers.id')
+        $invoices = DB::table('invoice')
+            ->join('customer', 'invoice.cus_id', '=', 'customer.id')
             ->select(
-                'invoices.*',
-                'customers.name as customer_name'
+                'invoice.*',
+                'customer.name as customer_name'
             )
             ->get();
         // Tra ve du lieu

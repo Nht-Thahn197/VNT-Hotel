@@ -3,13 +3,13 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Sign in - H2T Hotel</title>
+    <title>Đăng nhập - Khách sạn Việt Thành</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="{{asset('img/icon2.jpg')}}" rel="icon">
+    <link href="{{asset('favicon-home.ico')}}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -49,7 +49,7 @@
                 <div class="bg-secondary rounded p-4 p-sm-5 my-4 mx-3">
                     <div class="d-flex align-items-center justify-content-between mb-3">
                         <a href="#" class="">
-                            <h3 class="text-light"><i class="fa fa-user-edit me-2"></i>D2T Hotel</h3>
+                            <h3 class="text-light"><i class="fa fa-user-edit me-2"></i>Khách sạn Việt Thành</h3>
                         </a>
                         <h3>Log In</h3>
                     </div>
@@ -57,11 +57,11 @@
                         @csrf
                     <div class="form-floating mb-3">
                         <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email">
-                        <label for="floatingInput">Email address</label>
+                        <label for="floatingInput">Email</label>
                     </div>
                     <div class="form-floating mb-4">
-                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
-                        <label for="floatingPassword">Password</label>
+                        <input type="password" class="form-control" id="floatingPassword" placeholder="mật khẩu" name="password">
+                        <label for="floatingPassword">Mật khẩu</label>
                     </div>
 {{--                    <div class="d-flex align-items-center justify-content-between mb-4">--}}
 {{--                        <div class="form-check">--}}
@@ -70,7 +70,7 @@
 {{--                        </div>--}}
 {{--                        <a href="">Forgot Password</a>--}}
 {{--                    </div>--}}
-                    <button type="submit" class="btn btn-light py-3 w-100 mb-4">Log In</button>
+                    <button type="submit" class="btn btn-light py-3 w-100 mb-4">Đăng nhập</button>
 {{--                    <p class="text-center mb-0">Don't have an Account? <a href="">Sign Up</a></p>--}}
                     </form>
                 </div>

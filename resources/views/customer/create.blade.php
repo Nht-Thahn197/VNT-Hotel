@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Add New Customer - H2T Hotel</title>
+    <title>Danh sách khách hàng - VNT-Hotel</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -50,26 +50,30 @@
                     <form method="post" action="{{ Route('customer.store') }}">
                         @csrf
                         <div class="mb-3">
-                            <label for="name" class="form-label">Full Name <span>*</span></label>
-                            <input type="text" maxlength="50" required placeholder="enter your name" class="form-control" name="name" required>
+                            <label for="name" class="form-label">Họ & Tên <span>*</span></label>
+                            <input type="text" maxlength="50" required placeholder="Nhập họ tên" class="form-control" name="name" required>
                         </div>
                         <div class="mb-3">
-                            <label for="phone" class="form-label">Phone Number <span>*</span></label>
-                            <input type="int" maxlength="10" required placeholder="enter your phone number" class="form-control" name="phone" required>
+                            <label for="phone" class="form-label">Số điện thoại <span>*</span></label>
+                            <input type="int" maxlength="10" required placeholder="Nhập số điện thoại" class="form-control" name="phone" required>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email <span>*</span></label>
-                            <input type="email" maxlength="50" required placeholder="enter your email" class="form-control" name="email" aria-describedby="emailHelp" required>
+                            <input type="email" maxlength="50" required placeholder="Nhập email" class="form-control" name="email" aria-describedby="emailHelp" required>
                         </div>
                         <div class="mb-3">
-                            <label for="address" class="form-label">Address <span>*</span></label>
-                            <input type="text" maxlength="50" required placeholder="enter your address" class="form-control" name="address" required>
+                            <label for="address" class="form-label">Địa chỉ <span>*</span></label>
+                            <input type="text" maxlength="50" required placeholder="Nhập địa chỉ" class="form-control" name="address" required>
                         </div>
                         <div class="mb-3">
-                            <label for="password" class="form-label">Password <span>*</span></label>
-                            <input type="text" maxlength="50" required placeholder="enter your password" class="form-control" name="password" required>
+                            <label for="id_card" class="form-label">CMND/CCCD <span>*</span></label>
+                            <input type="text" maxlength="50" required placeholder="Nhập số CMND/CCCD" class="form-control" name="id_card" required>
                         </div>
-                        <button type="submit" class="btn btn-success">Add New</button>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Mật khẩu <span>*</span></label>
+                            <input type="text" maxlength="50" required placeholder="Nhập mật khẩu" class="form-control" name="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">Thêm mới</button>
                     </form>
                 </div>
             </div>
@@ -95,4 +99,3 @@
 </body>
 
 </html>
-

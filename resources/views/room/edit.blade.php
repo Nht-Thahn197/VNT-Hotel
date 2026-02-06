@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Edit Room - H2T Hotel</title>
+    <title>Sửa thông tin phòng - Khách sạn Việt Thành</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -52,10 +52,10 @@
                         @csrf
                             <div class="mb-3">
                             @foreach($rooms as $room)
-                            <label class="form-label">Type Room: </label> <select name="type_name" class="form-select">
+                            <label class="form-label">Loại phòng: </label> <select name="roomtype_id" class="form-select">
                                 @foreach($typerooms as $typeroom)
                                     <option value="{{ $typeroom->id }}"
-                                    @if($typeroom->id == $room->id)
+                                    @if($typeroom->id == $room->roomtype_id)
                                         {{'selected'}}
                                         @endif>
                                         {{ $typeroom->name }}
@@ -63,14 +63,34 @@
                                 @endforeach
                             </select>
                             </div>
-                            <div class="mb-3"> <label for="floor" class="form-label">Floor:</label>
-                                <input type="int" class="form-control" name="floor" value="{{$room->floor}}" ></div>
-                            <div class="mb-3"> <label for="name" class="form-label">Name:</label>
+                            <div class="mb-3">
+                                <label for="floor_id" class="form-label">Tầng:</label>
+                                <select name="floor_id" class="form-select" required>
+                                    @foreach($floors as $floor)
+                                        <option value="{{ $floor->id }}"
+                                            @if($floor->id == $room->floor_id)
+                                                {{ 'selected' }}
+                                            @endif>
+                                            {{ $floor->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3"> <label for="name" class="form-label">Tên phòng:</label>
                                 <input type="text" class="form-control" name="name" value="{{$room->name}}" ></div>
-                            <div class="mb-3"> <label for="status" class="form-label">Status:</label>
-                                <input type="text" class="form-control" name="status" value="{{$room->status}}"></div>
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Trạng thái:</label>
+                                <select name="status" class="form-select" required>
+                                    <option value="0" @if($room->status == 0) selected @endif>Available</option>
+                                    <option value="1" @if($room->status == 1) selected @endif>Reserved</option>
+                                    <option value="2" @if($room->status == 2) selected @endif>Occupied</option>
+                                    <option value="3" @if($room->status == 3) selected @endif>Cleaning</option>
+                                    <option value="4" @if($room->status == 4) selected @endif>Maintenance</option>
+                                    <option value="5" @if($room->status == 5) selected @endif>Disabled</option>
+                                </select>
+                            </div>
                         @endforeach
-                        <button type="submit" class="btn btn-success">Update</button>
+                        <button type="submit" class="btn btn-success">Cập nhật</button>
                     </form>
                 </div>
             </div>
@@ -98,3 +118,4 @@
 </body>
 
 </html>
+

@@ -12,13 +12,13 @@ class Customer extends Model implements \Illuminate\Contracts\Auth\Authenticatab
     use HasFactory;
     use Authenticatable;
 
-    protected $fillable = ['name', 'phone', 'email', 'address', 'password'];
+    protected $fillable = ['name', 'phone', 'email', 'address', 'password', 'id_card'];
     public $timestamps = false;
-    protected $table = 'customers';
+    protected $table = 'customer';
 
     public function index(){
         // Query lay du lieu
-        $customers =DB::table('customers')->get();
+        $customers =DB::table('customer')->get();
         // Tra ve du lieu
         return $customers;
     }
@@ -26,8 +26,8 @@ class Customer extends Model implements \Illuminate\Contracts\Auth\Authenticatab
     public function show(){
         // Query lay du lieu
         $email = session('customer.email');
-        $cus_id = DB::table('customers')->where('email',$email)->get('id');
-        $customers = DB::table('customers')
+        $cus_id = DB::table('customer')->where('email',$email)->get('id');
+        $customers = DB::table('customer')
             ->where('id',$cus_id[0]->id)
             ->get();
         // Tra ve du lieu
@@ -36,33 +36,35 @@ class Customer extends Model implements \Illuminate\Contracts\Auth\Authenticatab
 
     public function store(){
         // query builder uufng để lưu dữ liệu
-        DB::table('customers')->insert([
+        DB::table('customer')->insert([
             'name' => $this->name,
             'phone' => $this->phone,
             'email' => $this->email,
             'address' => $this->address,
-            'password' => $this->password
+            'password' => $this->password,
+            'id_card' => $this->id_card
         ]);
     }
     public function edit(){
-        $customers = DB::table('customers')
+        $customers = DB::table('customer')
             ->where('id',$this->id)
             ->get();
         return $customers;
     }
     public function updateCustomer(){
         // query builder de update du lieu
-        DB::table('customers')->where('id', $this->id)
+        DB::table('customer')->where('id', $this->id)
             ->update([
                 'name' => $this->name,
                 'phone' => $this->phone,
                 'email' => $this->email,
                 'address' => $this->address,
-                'password' => $this->password
+                'password' => $this->password,
+                'id_card' => $this->id_card
             ]);
     }
     public function destroyCustomer(){
-        DB::table('customers')
+        DB::table('customer')
             ->where('id', $this->id)
             ->delete();
     }

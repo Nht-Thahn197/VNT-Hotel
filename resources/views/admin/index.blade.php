@@ -3,13 +3,13 @@
 
 <head>
     <meta charset="utf-8">
-    <title>List of Admin - H2T Hotel</title>
+    <title>Danh sách nhân viên - VNT-Hotel</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="img/icon2.jpg" rel="icon">
+    <link href="{{asset('img/icon2.jpg')}}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -60,17 +60,27 @@
             <div class="row g-4">
                 <div class="col-sm-12 col-xl-12">
                     <div class="bg-secondary rounded h-100 p-4">
-                        <h6 class="mb-4">List Admin</h6>
-                        <a href="{{route('admin.create')}}"><button type="submit" class="btn btn-success">Add New</button></a>
+                        <h6 class="mb-4">Danh sách nhân viên</h6>
+                        <a href="{{route('admin.create')}}"><button type="submit" class="btn btn-success">Thêm mới</button></a>
+                        @php
+                            $statusLabels = [
+                                0 => "Inactive",
+                                1 => "Active",
+                                2 => "Blocked",
+                                3 => "Deleted",
+                            ];
+                        @endphp
                         <table class="table table-dark">
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Full Name</th>
-                                <th>Phone Number</th>
+                                <th>Họ & Tên</th>
+                                <th>Số điện thoại</th>
                                 <th>Email</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
+                                <th>Chức vụ</th>
+                                <th>Trạng thái</th>
+                                <th>Sửa</th>
+                                <th>Xóa</th>
                             </tr>
                             </thead>
                             @foreach($admins as $admin)
@@ -79,12 +89,14 @@
                                     <td>{{ $admin->name}}</td>
                                     <td>{{ $admin->phone}}</td>
                                     <td>{{ $admin->email}}</td>
-                                    <td><a href="{{ route('admin.edit', $admin->id) }}"><button type="submit" class="btn btn-info">Edit</button></a> </td>
+                                    <td>{{ $admin->role}}</td>
+                                    <td>{{ $statusLabels[$admin->status] ?? $admin->status }}</td>
+                                    <td><a href="{{ route('admin.edit', $admin->id) }}"><button type="submit" class="btn btn-info">Sửa</button></a> </td>
                                     <td>
                                         <form method="post" action="{{ route('admin.destroy', $admin->id) }}">
                                             @method('DELETE')
                                             @csrf
-                                            <button type="submit" class="btn btn-primary">Delete</button>
+                                            <button type="submit" class="btn btn-primary">Xóa</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -125,3 +137,4 @@
 </body>
 
 </html>
+

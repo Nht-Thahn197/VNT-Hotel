@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Add Type Room - H2T Hotel</title>
+    <title>Thêm loại phòng - Khách sạn Việt Thành</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -50,18 +50,30 @@
                     <form method="post" action="{{ Route('typeroom.store') }}">
                         @csrf
                         <div class="mb-3">
-                            <label for="name" class="form-label">Name <span>*</span></label>
-                            <input type="text" maxlength="50" required placeholder="enter name typeroom" class="form-control" name="name">
+                            <label for="name" class="form-label">Tên loại phòng <span>*</span></label>
+                            <input type="text" maxlength="50" required placeholder="Nhập tên loại phòng" class="form-control" name="name">
                         </div>
                         <div class="mb-3">
-                            <label for="price" class="form-label">Price <span>*</span></label>
-                            <input type="int" maxlength="50" required placeholder="enter Price" class="form-control" name="price">
+                            <label for="price_hour" class="form-label">Giá theo giờ <span>*</span></label>
+                            <input type="int" maxlength="50" required placeholder="Nhập giá theo giờ" class="form-control" name="price_hour">
                         </div>
                         <div class="mb-3">
-                            <label for="guest" class="form-label">Guest <span>*</span></label>
-                            <input type="int" maxlength="50" required placeholder="enter your password" class="form-control" name="guest" >
+                            <label for="price_overnight" class="form-label">Giá qua đêm <span>*</span></label>
+                            <input type="int" maxlength="50" required placeholder="Nhập giá qua đêm" class="form-control" name="price_overnight">
                         </div>
-                        <button type="submit" class="btn btn-success">Add New</button>
+                        <div class="mb-3">
+                            <label for="price_night" class="form-label">Giá theo đêm <span>*</span></label>
+                            <input type="int" maxlength="50" required placeholder="Nhập giá theo đêm" class="form-control" name="price_night">
+                        </div>
+                        <div class="mb-3">
+                            <label for="max_guest" class="form-label">Số khách tối đa <span>*</span></label>
+                            <input type="int" maxlength="50" required placeholder="Nhập số khách tối đa" class="form-control" name="max_guest" >
+                        </div>
+                        <div class="mb-3">
+                            <label for="guest" class="form-label">Số khách <span>*</span></label>
+                            <input type="int" maxlength="50" required placeholder="Nhập số khách" class="form-control" name="guest" >
+                        </div>
+                        <button type="submit" class="btn btn-success">Thêm mới</button>
                     </form>
                 </div>
             </div>
@@ -87,4 +99,3 @@
 </body>
 
 </html>
-

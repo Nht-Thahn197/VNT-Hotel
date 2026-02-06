@@ -42,6 +42,7 @@ Route::post('/login-admin', [\App\Http\Controllers\AdminController::class, 'logi
 
 Route::get('/login-customer', [\App\Http\Controllers\CustomerController::class, 'login']) ->name('customer.login');
 Route::post('/login-customer', [\App\Http\Controllers\CustomerController::class, 'loginProcess']) ->name('customer.loginProcess');
+Route::get('/logout-customer', [\App\Http\Controllers\CustomerController::class, 'logout']) ->name('customer.logout');
 
 
 // Customer
@@ -67,6 +68,9 @@ Route::middleware('adminMiddleware')->prefix('invoice')->group(function (){
     Route::get('/invoice/pay/{id}', [\App\Http\Controllers\InvoiceController::class, 'mini'])->name('invoice.mini');
     Route::get('/invoice/restore/{id}', [\App\Http\Controllers\InvoiceController::class, 'restore'])->name('invoice.restore');
 });
+
+// Booking
+Route::middleware('adminMiddleware')->get('/booking', [\App\Http\Controllers\BookingController::class, 'index'])->name('booking.index');
 
 // Invoice Detail
 Route::middleware('adminMiddleware')->prefix('invoicedetail')->group(function (){
@@ -122,23 +126,28 @@ Route::middleware('adminMiddleware')->prefix('service')->group(function (){
     Route::delete('/{id}', [\App\Http\Controllers\ServiceController::class, 'destroy'])->name('service.destroy');
 });
 
+// Floor
+Route::middleware('adminMiddleware')->prefix('floor')->group(function (){
+    Route::get('/', [\App\Http\Controllers\FloorController::class, 'index'])->name('floor.index');
+    Route::get('/create',[\App\Http\Controllers\FloorController::class,'create'])->name('floor.create');
+    Route::post('/create',[\App\Http\Controllers\FloorController::class,'store'])->name('floor.store');
+    Route::get('/{id}/edit', [\App\Http\Controllers\FloorController::class, 'edit'])->name('floor.edit');
+    Route::put('/{id}/edit', [\App\Http\Controllers\FloorController::class, 'update'])->name('floor.update');
+    Route::delete('/{id}/destroy', [\App\Http\Controllers\FloorController::class, 'destroy'])->name('floor.destroy');
+});
+
 // Invoice Service
 Route::middleware('adminMiddleware')->prefix('serviceinvoice')->group(function (){
     Route::get('/', [\App\Http\Controllers\ServiceInvoiceController::class, 'index']) ->name('serviceinvoice.index');
 });
 
 
-// Home Page
-Route::middleware('customerMiddleware')->prefix('home')->group(function (){
-    Route::get('/',[\App\Http\Controllers\HomeController::class, 'index']) ->name('home.index');
-    Route::get('/booking',[\App\Http\Controllers\HomeController::class, 'booking']) ->name('home.booking');
-    Route::post('/reservation',[\App\Http\Controllers\HomeController::class, 'store']) ->name('home.store');
-});
-// My booking
-Route::middleware('customerMiddleware')->prefix('home')->group(function () {
-    Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home.index');
-    Route::get('/{customer_id}/booking', [\App\Http\Controllers\HomeController::class, 'show'])->name('home.booking');
-//    Route::post('/reservation', [\App\Http\Controllers\HomeController::class, 'show'])->name('home.show');
-    Route::get('/cancel-order/{order_id}', [\App\Http\Controllers\CustomerController::class, 'cancel'])->name('cancel.booking');
+// Home Page (public)
+Route::get('/home',[\App\Http\Controllers\HomeController::class, 'index']) ->name('home.index');
 
+// Customer actions
+Route::middleware('customerMiddleware')->prefix('home')->group(function () {
+    Route::post('/reservation',[\App\Http\Controllers\HomeController::class, 'store']) ->name('home.store');
+    Route::get('/{customer_id}/booking', [\App\Http\Controllers\HomeController::class, 'show'])->name('home.booking');
+    Route::get('/cancel-order/{order_id}', [\App\Http\Controllers\CustomerController::class, 'cancel'])->name('cancel.booking');
 });

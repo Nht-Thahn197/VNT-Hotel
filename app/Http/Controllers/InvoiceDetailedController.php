@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\InvoiceDetailed;
 use App\Http\Requests\StoreInvoiceDetailedRequest;
 use App\Http\Requests\UpdateInvoiceDetailedRequest;
-use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 
 class InvoiceDetailedController extends Controller
@@ -18,13 +18,11 @@ class InvoiceDetailedController extends Controller
      */
     public function index($id)
     {
-        //
         $obj  = new InvoiceDetailed();
-        // Goi den funtion index o trong mpdels de lay du lieu
-        $invoicedetails= $obj->index($id);
-        // Tra ve view va gui du lieu lay dc
+        $invoicedetails = $obj->index($id);
         return view('invoicedetail.index', ['invoicedetails' => $invoicedetails]);
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -63,19 +61,28 @@ class InvoiceDetailedController extends Controller
      * @param  \App\Models\InvoiceDetailed  $invoiceDetailed
      * @return \Illuminate\Http\Response
      */
-    public function edit(InvoiceDetailed $invoiceDetailed, Request $request)
+    public function edit($id)
     {
-        //
-        $objRoom = new Room();
-        $rooms = $objRoom->index();
-        $objInvoicedetail = new InvoiceDetailed();
-        $objInvoicedetail->id = $request->id;
-        $invoicedetails = $objInvoicedetail->edit();
+        $booking = DB::table('booking')->where('id', $id)->first();
+        if (!$booking || (int) $booking->booking_status != 1) {
+            return Redirect::route('booking.index');
+        }
 
-        // $floor = $obj->edit();
+        $rooms = DB::table('room as r')
+            ->leftJoin('booking as b', function ($join) {
+                $join->on('r.id', '=', 'b.room_id')
+                    ->whereIn('b.booking_status', [1, 2]);
+            })
+            ->where('r.roomtype_id', $booking->room_type_id)
+            ->whereNotIn('r.status', [4, 5])
+            ->whereNull('b.id')
+            ->select('r.*')
+            ->orderBy('r.name')
+            ->get();
 
-        //hien thi view edit voi du lieu da duoc lay
-        return view('invoicedetail.edit',['rooms' => $rooms, 'invoicedetails' => $invoicedetails
+        return view('invoicedetail.edit', [
+            'rooms' => $rooms,
+            'booking' => $booking,
         ]);
     }
 
@@ -86,20 +93,37 @@ class InvoiceDetailedController extends Controller
      * @param  \App\Models\InvoiceDetailed  $invoiceDetailed
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateInvoiceDetailedRequest $request, InvoiceDetailed $invoiceDetailed)
+    public function update(UpdateInvoiceDetailedRequest $request)
     {
-        //
-        $obj = new InvoiceDetailed();
-        $obj->room_id= $request->room_name;
+        $booking = DB::table('booking')->where('id', $request->booking_id)->first();
+        if (!$booking || (int) $booking->booking_status != 1) {
+            return Redirect::route('booking.index');
+        }
 
-        $obj->invoice_id= $request->invoice_id;
-        //Lay du lieu
-        // Goi function update du lieu trong model
-        $obj->updateInvoicedetail();
-        //
-        flash()->addInfo('Guest room selected. Please press "Detail" to check');
-        //Quay ve Route danh sach
-        return Redirect::route('invoice.index');
+        $room = DB::table('room')->where('id', $request->room_id)->first();
+        if (!$room || (int) $room->roomtype_id != (int) $booking->room_type_id || in_array((int) $room->status, [4, 5], true)) {
+            flash()->addError('Phong khong hop le hoac da duoc su dung.');
+            return Redirect::route('booking.index');
+        }
+
+        $hasActiveBooking = DB::table('booking')
+            ->where('room_id', $room->id)
+            ->whereIn('booking_status', [1, 2])
+            ->where('id', '<>', $booking->id)
+            ->exists();
+        if ($hasActiveBooking) {
+            flash()->addError('Phong khong hop le hoac da duoc su dung.');
+            return Redirect::route('booking.index');
+        }
+
+        DB::table('booking')->where('id', $booking->id)->update([
+            'room_id' => $room->id,
+            'booking_status' => 2,
+        ]);
+        DB::table('room')->where('id', $room->id)->update(['status' => 2]);
+
+        flash()->addInfo('Da check-in va gan phong.');
+        return Redirect::route('booking.index');
     }
 
     /**

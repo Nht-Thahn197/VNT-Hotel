@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Edit Service - H2T Hotel</title>
+    <title>Sửa dịch vụ - Khách sạn Việt Thành</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -52,16 +52,16 @@
                         @method('PUT')
                         @csrf
                         @foreach($services as $service)
-                            <div class="mb-3"> <label for="image" class="form-label">Image:</label>
+                            <div class="mb-3"> <label for="image" class="form-label">Ảnh:</label>
                                 <input type="text" class="form-control" name="image" value="{{$service->image}}"></div>
-                            <div class="mb-3"> <label for="name" class="form-label">Name:</label>
+                            <div class="mb-3"> <label for="name" class="form-label">Tên dịch vụ:</label>
                                 <input type="text" class="form-control" name="name" value="{{$service->name}}"></div>
-                            <div class="mb-3"> <label for="price" class="form-label">Price:</label>
+                            <div class="mb-3"> <label for="price" class="form-label">Giá:</label>
                                 <input type="text" class="form-control" name="price" value="{{$service->price}}"></div>
-                            <div class="mb-3"> <label for="describe" class="form-label">Describe:</label>
-                                <input type="text" class="form-control" name="describe" value="{{$service->describe}}"></div>
+                            <div class="mb-3"> <label for="description" class="form-label">Mô tả:</label>
+                                <input type="text" class="form-control" name="description" value="{{$service->description}}"></div>
                         @endforeach
-                        <button type="submit" class="btn btn-success">Update</button>
+                        <button type="submit" class="btn btn-success">Cập nhật</button>
                     </form>
                 </div>
             </div>

@@ -9,14 +9,18 @@ use Illuminate\Support\Facades\DB;
 class Room extends Model
 {
     use HasFactory;
-    protected $table = 'rooms';
+    protected $table = 'room';
 
     public function index(){
         // Query lay du lieu
-        $rooms = DB::table('rooms')
-            ->join('room_types', 'rooms.roomtype_id', '=', 'room_types.id')
-            ->select('rooms.*',
-            'room_types.name as roomtype_name'
+        $rooms = DB::table('room')
+            ->join('room_type', 'room.roomtype_id', '=', 'room_type.id')
+            ->leftJoin('floors', 'room.floor_id', '=', 'floors.id')
+            ->select(
+                'room.*',
+                'room_type.name as roomtype_name',
+                'floors.name as floor_name',
+                'floors.status as floor_status'
             )
             ->get();
         // Tra ve du lieu
@@ -24,22 +28,22 @@ class Room extends Model
     }
 
     public function create(){
-        $typerooms = DB::table('room_types')->get();
+        $typerooms = DB::table('room_type')->get();
         return $typerooms;
     }
 
     public function store(){
         // query builder uufng để lưu dữ liệu
-        DB::table('rooms')->insert([
+        DB::table('room')->insert([
             'name' => $this->name,
-            'floor' => $this->floor,
+            'floor_id' => $this->floor_id,
             'status' => $this->status,
-            'roomtype_id' => $this->id
+            'roomtype_id' => $this->roomtype_id
         ]);
     }
 
     public function edit(){
-        $rooms = DB::table('rooms')
+        $rooms = DB::table('room')
             ->where('id',$this->id)
             ->get();
         return $rooms;
@@ -47,16 +51,16 @@ class Room extends Model
 
     public function updateRoom(){
         // query builder de update du lieu
-        DB::table('rooms')->where('id', $this->id)
+        DB::table('room')->where('id', $this->id)
             ->update([
                 'name' => $this->name,
-                'floor' => $this->floor,
+                'floor_id' => $this->floor_id,
                 'status' => $this->status,
-                'roomtype_id' => $this->id
+                'roomtype_id' => $this->roomtype_id
             ]);
     }
     public function destroyRoom(){
-        DB::table('rooms')
+        DB::table('room')
             ->where('id', $this->id)
             ->delete();
     }

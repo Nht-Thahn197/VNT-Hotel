@@ -48,7 +48,10 @@ class RoomTypeController extends Controller
         $obj = new RoomType();
         //Lấy dữ liệu
         $obj->name = $request->name;
-        $obj->price = $request->price;
+        $obj->price_hour = $request->price_hour;
+        $obj->price_overnight = $request->price_overnight;
+        $obj->price_night = $request->price_night;
+        $obj->max_guest = $request->max_guest;
         $obj->guest = $request->guest;
         //Gọi function để lưu dữ liệu lên db trong model
         $obj->store();
@@ -101,7 +104,10 @@ class RoomTypeController extends Controller
         //Lay du lieu
         $obj->id = $request->id;
         $obj->name = $request->name;
-        $obj->price = $request->price;
+        $obj->price_hour = $request->price_hour;
+        $obj->price_overnight = $request->price_overnight;
+        $obj->price_night = $request->price_night;
+        $obj->max_guest = $request->max_guest;
         $obj->guest = $request->guest;
         // Goi function update du lieu trong model
         $obj->updateTyperoom();

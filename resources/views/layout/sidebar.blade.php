@@ -14,24 +14,16 @@
             </div>
         </div>
         <div class="navbar-nav w-100">
-            <a href="{{route('dashboard')}}" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-            <a href="http://localhost/Hotel/public/calendar" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Calendar</a>
-            <a href="{{route('admin.index')}}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Admin</a>
-            <a href="{{route('customer.index')}}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Customer</a>
-            <a href="{{route('invoice.index')}}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Invoice</a>
-            <a href="{{route('room.index')}}" class="nav-item nav-link "><i class="fa fa-table me-2"></i>Room</a>
-            <a href="{{route('typeroom.index')}}" class="nav-item nav-link "><i class="fa fa-table me-2"></i>Type Room</a>
-            <a href="{{route('service.index')}}" class="nav-item nav-link "><i class="fa fa-table me-2"></i>Service</a>
-            <!--                    <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>-->
-{{--            <div class="nav-item dropdown">--}}
-{{--                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>--}}
-{{--                <div class="dropdown-menu bg-transparent border-0">--}}
-{{--                    <a href="signin.html" class="dropdown-item">Sign In</a>--}}
-{{--                    <a href="signup.html" class="dropdown-item">Sign Up</a>--}}
-{{--                    <a href="404.html" class="dropdown-item">404 Error</a>--}}
-{{--                    <a href="blank.html" class="dropdown-item">Blank Page</a>--}}
-{{--                </div>--}}
-{{--            </div>--}}
+            <a href="{{route('dashboard')}}" class="nav-item nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}"><i class="fa fa-tachometer-alt me-2"></i>Trang chủ</a>
+            <a href="http://localhost/Hotel/public/calendar" class="nav-item nav-link {{ request()->is('calendar*') ? 'active' : '' }}"><i class="fa fa-th me-2"></i>Lịch</a>
+            <a href="{{route('admin.index')}}" class="nav-item nav-link {{ request()->routeIs('admin.*') ? 'active' : '' }}"><i class="fa fa-table me-2"></i>Nhân viên</a>
+            <a href="{{route('customer.index')}}" class="nav-item nav-link {{ request()->routeIs('customer.*') ? 'active' : '' }}"><i class="fa fa-table me-2"></i>Khách hàng</a>
+            <a href="{{route('booking.index')}}" class="nav-item nav-link {{ request()->routeIs('booking.*') ? 'active' : '' }}"><i class="fa fa-table me-2"></i>Đặt phòng</a>
+            <a href="{{route('invoice.index')}}" class="nav-item nav-link {{ request()->routeIs('invoice.*') || request()->routeIs('invoicedetail.*') ? 'active' : '' }}"><i class="fa fa-table me-2"></i>Hóa đơn</a>
+            <a href="{{route('room.index')}}" class="nav-item nav-link {{ request()->routeIs('room.*') ? 'active' : '' }}"><i class="fa fa-table me-2"></i>Phòng</a>
+            <a href="{{route('floor.index')}}" class="nav-item nav-link {{ request()->routeIs('floor.*') ? 'active' : '' }}"><i class="fa fa-table me-2"></i>Tầng</a>
+            <a href="{{route('typeroom.index')}}" class="nav-item nav-link {{ request()->routeIs('typeroom.*') ? 'active' : '' }}"><i class="fa fa-table me-2"></i>Loại phòng</a>
+            <a href="{{route('service.index')}}" class="nav-item nav-link {{ request()->routeIs('service.*') ? 'active' : '' }}"><i class="fa fa-table me-2"></i>Dịch vụ</a>
         </div>
     </nav>
 </div>

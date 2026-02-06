@@ -1,15 +1,11 @@
-@php
-    $Price = \App\Models\InvoiceDetailed::where('id', 4)
-        ->sum(DB::raw('Price * DATEDIFF(time_end, time_start)'));
-@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Booking - H2T Hotel</title>
-    <link href="{{asset('img/icon2.jpg')}}" rel="icon">
+    <title>Đặt phòng - Khách sạn Việt Thành</title>
+    <link href="{{asset('favicon-home.ico')}}" rel="icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
 
     <!-- font awesome cdn link  -->
@@ -27,42 +23,60 @@
 
 <section class="bookings">
 
-    <h1 class="heading">my bookings</h1>
+    <h1 class="heading">Phòng đã đặt</h1>
 
     <div class="box-container">
         @foreach($orders as $order)
         <div class="box">
-            <p>booking id : <span>{{$order -> invoice_id}}</span></p>
-            <p>name : <span>{{ $order -> customer_name }}</span></p>
-            <p>email :  <span>{{$order -> email}}</span></p>
-            <p>number :  <span>{{$order -> phone}}</span></p>
-            <p>People : <span>{{$order -> total}}</span></p>
-            <p>rooms : <span>{{$order -> room_name}}</span></p>
-            <p>check in :  <span>{{$order -> time_start }}</span></p>
-            <p>check out :   <span>{{$order -> time_end}}</span></p>
-            <p>status :<span>
-                @if($order->status == 0)
-                    {{ "Unconfimred" }}
-                @elseif($order->status == 1)
-                    {{ "Confirmed" }}
-                @elseif($order->status == 2)
-                    {{ "Paid" }}
-                @elseif($order->status == 3)
-                    {{ "Checked out" }}
-                @elseif($order->status == 4)
-                    {{ "Cancel" }}
-                @endif
+            <p>Mã đặt phòng : <span>{{$order -> booking_id}}</span></p>
+            <p>Tên : <span>{{ $order -> customer_name }}</span></p>
+            <p>Email :  <span>{{$order -> email}}</span></p>
+            <p>Số điện thoại :  <span>{{$order -> phone}}</span></p>
+            <p>Loại phòng : <span>{{$order -> room_type_name}}</span></p>
+            <p>Phòng : <span>{{ $order -> room_name ?? 'Chưa gắn' }}</span></p>
+            <p>Check in :  <span>{{$order -> time_start }}</span></p>
+            <p>Check out :   <span>{{$order -> time_end}}</span></p>
+            <p>Trạng thái :<span>
+                @if($order->booking_status == 0)
+    {{ "Cho xac nhan" }}
+@elseif($order->booking_status == 1)
+    {{ "Da xac nhan / giu phong" }}
+@elseif($order->booking_status == 2)
+    {{ "Da nhan phong" }}
+@elseif($order->booking_status == 3)
+    {{ "Da tra phong" }}
+@elseif($order->booking_status == 4)
+    {{ "Da huy" }}
+@elseif($order->booking_status == 5)
+    {{ "Khach khong den" }}
+@endif
                 </span></p>
-            <p>Price(1 day) : <span>{{ number_format($Price) }} VND</span></p>
+            <p>Thanh toán :<span>
+                @if($order->invoice_status === null)
+    {{ "Chua lap hoa don" }}
+@elseif($order->invoice_status == 0)
+    {{ "Tam tinh" }}
+@elseif($order->invoice_status == 1)
+    {{ "Chua thanh toan" }}
+@elseif($order->invoice_status == 2)
+    {{ "Da thanh toan" }}
+@elseif($order->invoice_status == 3)
+    {{ "Da hoan tien" }}
+@elseif($order->invoice_status == 4)
+    {{ "Huy hoa don" }}
+@endif
+            </span></p>
+            @if(in_array($order->booking_status, [0, 1]))
             <form action="" method="POST">
-                <input type="hidden" name="order_id" value="{{ $order->id }}">
-                <a href="{{ route('cancel.booking', ['order_id' => $order->invoice_id]) }}" value="cancel this booking" name="cancel" class="btn" onclick="return confirm('cancel this booking?');">Cancel Booking</a>
+                <input type="hidden" name="order_id" value="{{ $order->booking_id }}">
+                <a href="{{ route('cancel.booking', ['order_id' => $order->booking_id]) }}" value="cancel this booking" name="cancel" class="btn" onclick="return confirm('cancel this booking?');">Cancel Booking</a>
             </form>
+            @endif
         </div>
         @endforeach
         <div class="box" style="text-align: center;">
-            <p style="padding-bottom: .5rem; text-transform:capitalize;">Book additional rooms!</p>
-            <a href="../../home#reservation" class="btn">book new</a>
+            <p style="padding-bottom: .5rem; text-transform:capitalize;">Đặt phòng mới</p>
+            <a href="../../home#reservation" class="btn">Đặt phòng</a>
         </div>
 
     </div>
@@ -82,3 +96,5 @@
 
 </body>
 </html>
+
+

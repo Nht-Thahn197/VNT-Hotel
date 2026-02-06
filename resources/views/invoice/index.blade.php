@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>List of Invoice - H2T Hotel</title>
+    <title>Danh sách hóa đơn - Khách sạn Việt Thành</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -58,53 +58,56 @@
             <div class="row g-4">
                 <div class="col-sm-12 col-xl-12">
                     <div class="bg-secondary rounded h-100 p-4">
-                        <h6 class="mb-4">List of Invoice</h6>
+                        <h6 class="mb-4">Danh sách hóa đơn</h6>
                         <table class="table table-dark">
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Status</th>
-                                <th>Method</th>
-                                <th>Name Customer</th>
-                                <th>Detail</th>
-                                <th>Service Booked</th>
-                                <th></th>
-                                <th>Actice</th>
-                                <th></th>
-
+                                <th>Booking</th>
+                                <th>Tên khách hàng</th>
+                                <th>Check in</th>
+                                <th>Check out</th>
+                                <th>Trạng thái</th>
+                                <th>Hình thức thanh toán</th>
+                                <th>Tổng tiền</th>
+                                <th>Hành động</th>
                             </tr>
                             </thead>
                             @foreach($invoices as $invoice)
                                 <tr>
-                                    <td>{{ $invoice->id}}</td>
+                                    <td>{{ $invoice->id }}</td>
+                                    <td>{{ $invoice->booking_id }}</td>
+                                    <td>{{ $invoice->customer_name ?? '-' }}</td>
+                                    <td>{{ $invoice->time_start ?? '-' }}</td>
+                                    <td>{{ $invoice->time_end ?? '-' }}</td>
                                     <td>
                                         @if($invoice->status == 0)
-                                            {{ "Unconfimred" }}
+                                            {{ "Chưa lập hóa đơn" }}
                                         @elseif($invoice->status == 1)
-                                            {{ "Confirmed" }}
+                                            {{ "Chưa thanh toán" }}
                                         @elseif($invoice->status == 2)
-                                            {{ "Paid" }}
+                                            {{ "Đã thanh toán" }}
                                         @elseif($invoice->status == 3)
-                                            {{ "Checked out" }}
+                                            {{ "Đã hoàn tiền" }}
                                         @elseif($invoice->status == 4)
-                                            {{ "Cancel" }}
+                                            {{ "Đã hủy" }}
                                         @endif
                                     </td>
-
-                                    <td> @if($invoice->method == 0)
-                                             {{'Not Paid'}}
+                                                                        <td>
+                                        @if($invoice->method === null || $invoice->method == 0)
+                                            {{ "-" }}
                                         @elseif($invoice->method == 1)
-                                             {{'Cash'}}
-                                        @else
-                                             {{'Tranfer'}}
-                                    @endif</td>
-                                    <td>{{ $invoice->customer_name}}</td>
-                                    <td><a href="{{route('invoicedetail.index', ['id' => $invoice->id])}}"><button class="btn btn-info">Detail</button></a> </td>
-                                    <td><a href="{{route('serviceinvoice.index')}}"><button class="btn btn-info">Show</button></a> </td>
-                                    <td><a href="{{route('invoice.updateStatus', $invoice->id)}}"><button class="btn btn-success">Xác nhận</button></a> </td>
-                                    <td><a href="{{route('invoice.mini', $invoice->id)}}"><button class="btn btn-primary">Thanh toán</button></a></td>
-                                    <td><a href="{{route('invoice.restore', $invoice->id)}}"><button class="btn btn-light">Trả phòng</button></a></td>
-
+                                            {{ "Tiền mặt" }}
+                                        @elseif($invoice->method == 2)
+                                            {{ "Ngân hàng" }}
+                                        @elseif($invoice->method == 3)
+                                            {{ "Thẻ" }}
+                                        @endif
+                                    </td>
+                                    <td>{{ number_format($invoice->total_amount) }}</td>
+                                    <td>
+                                        <a href="{{route('invoicedetail.index', ['id' => $invoice->id])}}"><button class="btn btn-secondary">Chi tiết</button></a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </table>
@@ -142,3 +145,5 @@
 </body>
 
 </html>
+
+

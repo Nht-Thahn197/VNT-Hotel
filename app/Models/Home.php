@@ -9,56 +9,51 @@ use Illuminate\Support\Facades\DB;
 class Home extends Model
 {
     use HasFactory;
-    protected $table = "invoice_detaileds";
+    protected $table = "invoice_detail";
 
     public function index(){
-        $invoicedetails = DB::table('invoice_detaileds')->get();
+        $invoicedetails = DB::table('invoice_detail')->get();
         return $invoicedetails;
     }
 
     public function store(){
         $email = session('customer.email');
-        $cus_id = DB::table('customers')->where('email',$email)->get('id');
-        DB::table('invoices')->insert([
-           'status' => 0,
-            'method' => $this->method,
-            'cus_id' => $cus_id[0]->id,
-            'ad_id' => 2
-        ]);
-        $invoice_id = DB::table('invoices')->where('cus_id', $cus_id[0]->id)->max('id');
-        $roomPrice = DB::table('room_types')->where('id', $this->roomtype_id)->get('price');
-
-        DB::table('invoice_detaileds')->insert([
-            'invoice_id' => $invoice_id,
-            'room_id' => 2,
+        $cusId = DB::table('customer')->where('email',$email)->value('id');
+        DB::table('booking')->insert([
+            'customer_id' => $cusId,
+            'room_type_id' => $this->roomtype_id,
+            'room_id' => null,
             'time_start' => $this->time_start,
             'time_end' => $this->time_end,
-            'total' => $this->people,
-            'price' => $roomPrice[0]->price
+            'booking_status' => 0
         ]);
     }
 
-    public function show(){
-        $email = session('customer.email');
-        $cus_id = DB::table('customers')->where('email',$email)->get('id');
-        $orders = DB::table('customers')
-            ->join('invoices', 'customers.id', '=', 'invoices.cus_id')
-            ->join('invoice_detaileds', 'invoices.id', '=', 'invoice_detaileds.invoice_id')
-            ->join('rooms', 'invoice_detaileds.room_id', '=', 'rooms.id')
-            ->select('*',
-            'invoices.status',
-            'customers.name AS customer_name',
-            'rooms.name as room_name'
+    public function show($customerId = null){
+        if (!$customerId) {
+            $email = session('customer.email');
+            $customerId = DB::table('customer')->where('email',$email)->value('id');
+        }
+        $orders = DB::table('customer')
+            ->join('booking', 'customer.id', '=', 'booking.customer_id')
+            ->join('room_type', 'booking.room_type_id', '=', 'room_type.id')
+            ->leftJoin('room', 'booking.room_id', '=', 'room.id')
+            ->leftJoin('invoice', 'booking.id', '=', 'invoice.booking_id')
+            ->select(
+                'booking.id as booking_id',
+                'booking.booking_status',
+                'customer.name AS customer_name',
+                'customer.email',
+                'customer.phone',
+                'booking.time_start',
+                'booking.time_end',
+                'room_type.name as room_type_name',
+                'room.name as room_name',
+                'invoice.status as invoice_status',
+                'invoice.method as invoice_method'
             )
-//            ->join('rooms', 'rooms.id', '=', 'invoice_detaileds.room_id')
-//            ->select(
-//                'invoices.*',
-//                'rooms.name as room_name'
-//            )
-            ->where('cus_id',$cus_id[0]->id)
+            ->where('customer.id', $customerId)
             ->get();
         return $orders;
-//        $orders = DB::table('invoices')->where('cus_id',$cus_id[0]->id)->get();
-//        return $orders;
     }
 }

@@ -37,8 +37,13 @@ class RoomController extends Controller
         //
         $objTyperoom = new RoomType();
         $typerooms = $objTyperoom->index();
+        $objFloor = new Floor();
+        $floors = $objFloor->index();
 
-        return view('room.create', ['typerooms' => $typerooms]);
+        return view('room.create', [
+            'typerooms' => $typerooms,
+            'floors' => $floors,
+        ]);
     }
 
     /**
@@ -52,9 +57,9 @@ class RoomController extends Controller
         //
         $obj = new Room();
         $obj->name = $request->name;
-        $obj->floor = $request->floor;
+        $obj->floor_id = $request->floor_id;
         $obj->status = $request->status;
-        $obj->id = $request->roomtype_id;
+        $obj->roomtype_id = $request->roomtype_id;
         //Gọi function để lưu dữ liệu lên db trong model
         $obj->store();
         //
@@ -85,6 +90,8 @@ class RoomController extends Controller
         //
         $objTyperoom = new RoomType();
         $typerooms = $objTyperoom->index();
+        $objFloor = new Floor();
+        $floors = $objFloor->index();
         $objRoom = new Room();
         $objRoom->id = $request->id;
         $rooms = $objRoom->edit();
@@ -93,7 +100,9 @@ class RoomController extends Controller
 
         //hien thi view edit voi du lieu da duoc lay
         return view('room.edit',[
-            'typerooms' => $typerooms, 'rooms' => $rooms
+            'typerooms' => $typerooms,
+            'floors' => $floors,
+            'rooms' => $rooms,
         ]);
     }
 
@@ -110,9 +119,9 @@ class RoomController extends Controller
         $obj = new Room();
         //Lay du lieu
         $obj->id = $request->id;
-        $obj->floor = $request->floor;
+        $obj->floor_id = $request->floor_id;
         $obj->name = $request->name;
-        $obj->typerooms = $request->type_name;
+        $obj->roomtype_id = $request->roomtype_id;
         $obj->status = $request->status;
         // Goi function update du lieu trong model
         $obj->updateRoom();

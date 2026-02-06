@@ -1,7 +1,10 @@
 @php
     $totalRooms = \App\Models\Room::count();
     $totalInvoices = \App\Models\Invoice::count();
-    $totalSales = \App\Models\InvoiceDetailed::sum(DB::raw('Price * DATEDIFF(time_end, time_start)'));
+    $totalSales = DB::table('invoice_detail')
+        ->join('invoice', 'invoice_detail.invoice_id', '=', 'invoice.id')
+        ->where('invoice.status', 2)
+        ->sum('invoice_detail.total');
 @endphp
 
 <!DOCTYPE html>
@@ -9,7 +12,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Dashboard - H2T Hotel</title>
+    <title>Trang chủ - Khách sạn Việt Thành</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -67,8 +70,8 @@
                     <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
                         <i class="fa fa-chart-line fa-3x text-success"></i>
                         <div class="ms-3">
-                            <p class="mb-2">List Room</p>
-                            <h6 class="mb-0">{{$totalRooms}} Room</h6>
+                            <p class="mb-2">Số phòng trống</p>
+                            <h6 class="mb-0">{{$totalRooms}} Phòng</h6>
                         </div>
                     </div>
                 </div>
@@ -76,8 +79,8 @@
                     <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
                         <i class="fa fa-chart-bar fa-3x text-success"></i>
                         <div class="ms-3">
-                            <p class="mb-2">List Bill</p>
-                            <h6 class="mb-0">{{$totalInvoices}} Bill</h6>
+                            <p class="mb-2">Số hóa đơn</p>
+                            <h6 class="mb-0">{{$totalInvoices}} Hóa đơn</h6>
                         </div>
                     </div>
                 </div>
@@ -85,8 +88,8 @@
                     <div class="bg-secondary rounded d-flex align-items-center justify-content-center p-4">
                         <i class="fa fa-chart-area fa-3x text-success"></i>
                         <div class="ms-3">
-                            <p class="mb-2">Today Revenue</p>
-                            <h6 class="mb-0">{{ number_format($totalSales) }} VND</h6>
+                            <p class="mb-2">Danh thu hôm nay</p>
+                            <h6 class="mb-0">{{ number_format($totalSales) }} VNĐ</h6>
                         </div>
                     </div>
                 </div>

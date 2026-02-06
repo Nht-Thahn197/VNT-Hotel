@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreHomeRequest;
+use App\Models\Booking;
 use App\Models\Customer;
 use App\Models\Home;
 use App\Models\RoomType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 
 class HomeController extends Controller
@@ -19,9 +21,12 @@ class HomeController extends Controller
 
         $obj = new RoomType();
         $typerooms = $obj->index();
-        $obj  = new Customer();
-        // Goi den funtion index o trong mpdels de lay du lieu
-        $customers = $obj->show();
+        $customers = [];
+        if (session()->has('customer')) {
+            $obj  = new Customer();
+            // Goi den funtion index o trong mpdels de lay du lieu
+            $customers = $obj->show();
+        }
         return view('home.index', ['homes'=>$homes,
             'typerooms'=>$typerooms,
             'customers' =>$customers
@@ -35,26 +40,39 @@ class HomeController extends Controller
         $obj = new Home();
         $obj->roomtype_id = $request->roomtype_id;
         $formatted_start = str_replace('T', ' ', $request->check_in) . ':00';
-        $obj->time_start = strtotime($formatted_start);
+        $obj->time_start = $formatted_start;
         $formatted_end = str_replace('T', ' ', $request->check_out) . ':00';
-        $obj->time_end = strtotime($formatted_end);
+        $obj->time_end = $formatted_end;
         $obj->people = $request->people;
-        $obj->method = $request->paymentmethod;
-        //Gọi function để lưu dữ liệu lên db trong model
+        if (strtotime($obj->time_end) <= strtotime($obj->time_start)) {
+            flash()->addError('Thoi gian khong hop le.');
+            return Redirect::back();
+        }
+        $maxGuest = DB::table('room_type')->where('id', $obj->roomtype_id)->value('max_guest');
+        if ($maxGuest && (int) $obj->people > (int) $maxGuest) {
+            flash()->addError('So nguoi vuot qua gioi han cua loai phong.');
+            return Redirect::back();
+        }
+        if (!Booking::hasAvailability($obj->roomtype_id, $obj->time_start, $obj->time_end)) {
+            flash()->addError('Loai phong da het, vui long chon loai phong khac hoac thoi gian khac.');
+            return Redirect::back();
+        }
+        // G?i function ?? l?u d? li?u l?n db trong model
         $obj->store();
         //
-        flash()->addSuccess('Booking has been successful. Please go to "My Booking" to check');
-        //quay veef route hiển thị danh sách
+        flash()->addSuccess('Dat phong thanh cong. Vui long vao \"Lich su\" de theo doi.');
+        //quay veef route hi?n th? danh s?ch
         return Redirect::route('home.index');
     }
-    
+
     public function show($customer_id){
         $obj = new Home();
-        $orders = $obj->show($customer_id);
+        $orders = $obj->show();
         return view('home.booking', [
             'orders' => $orders,
         ]);
     }
+
     public function login()
     {
         return view('customer.login');

@@ -9,28 +9,28 @@ use Illuminate\Support\Facades\DB;
 class Service extends Model
 {
     use HasFactory;
-    protected $table = "services";
+    protected $table = "service";
 
     public function index()
     {
         // Query lay du lieu
-        $services = DB::table('services') ->get();
+        $services = DB::table('service') ->get();
         // Tra ve du lieu
         return $services;
     }
 
     public function store(){
         // query builder uufng để lưu dữ liệu
-        DB::table('services')->insert([
+        DB::table('service')->insert([
             'name' => $this->name,
             'image' => $this->image,
             'price' => $this->price,
-            'describe' => $this->describe
+            'description' => $this->description
         ]);
     }
 
     public function edit(){
-        $sercvices = DB::table('services')
+        $sercvices = DB::table('service')
             ->where('id',$this->id)
             ->get();
         return $sercvices;
@@ -38,17 +38,17 @@ class Service extends Model
 
     public function updateService(){
         // query builder de update du lieu
-        DB::table('services')->where('id', $this->id)
+        DB::table('service')->where('id', $this->id)
             ->update([
                 'name' => $this->name,
                 'image' => $this->image,
                 'price' => $this->price,
-                'describe' => $this->describe
+                'description' => $this->description
             ]);
     }
 
     public function destroyService(){
-        DB::table('services')
+        DB::table('service')
             ->where('id', $this->id)
             ->delete();
     }

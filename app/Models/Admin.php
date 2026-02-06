@@ -11,42 +11,46 @@ class Admin extends Model implements \Illuminate\Contracts\Auth\Authenticatable
 {
     use HasFactory;
     use Authenticatable;
-    protected $fillable = ['name','phone','email','password'];
+    protected $fillable = ['name', 'phone', 'email', 'password', 'role', 'status'];
     public $timestamps = false;
-    protected $table = "admins";
+    protected $table = "user";
     public function index(){
         // Query lay du lieu
-        $admins =DB::table('admins')->get();
+        $admins =DB::table('user')->get();
         // Tra ve du lieu
         return $admins;
     }
     public function store(){
         // query builder uufng để lưu dữ liệu
-        DB::table('admins')->insert([
+        DB::table('user')->insert([
             'name' => $this->name,
             'phone' => $this->phone,
             'email' => $this->email,
-            'password' => $this->password
+            'password' => $this->password,
+            'role' => $this->role,
+            'status' => $this->status
         ]);
     }
     public function edit(){
-        $admins = DB::table('admins')
+        $admins = DB::table('user')
             ->where('id',$this->id)
             ->get();
         return $admins;
     }
     public function updateAdmin(){
         // query builder de update du lieu
-        DB::table('admins')->where('id', $this->id)
+        DB::table('user')->where('id', $this->id)
             ->update([
                 'name' => $this->name,
                 'phone' => $this->phone,
                 'email' => $this->email,
-                'password' => $this->password
+                'password' => $this->password,
+                'role' => $this->role,
+                'status' => $this->status
             ]);
     }
     public function destroyAdmin(){
-        DB::table('admins')
+        DB::table('user')
             ->where('id', $this->id)
             ->delete();
     }

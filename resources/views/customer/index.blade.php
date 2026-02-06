@@ -3,13 +3,13 @@
 
 <head>
     <meta charset="utf-8">
-    <title>List of Customer - H2T Hotel</title>
+    <title>Danh sách khách hàng - Khách sạn Việt Thành</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="img/icon2.jpg" rel="icon">
+    <link href="{{asset('img/icon2.jpg')}}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -60,18 +60,19 @@
             <div class="row g-4">
                 <div class="col-sm-12 col-xl-12">
                     <div class="bg-secondary rounded h-100 p-4">
-                        <h6 class="mb-4">List Customer</h6>
-                        <a href="{{route('customer.create')}}"><button type="submit" class="btn btn-success">Add New</button></a>
+                        <h6 class="mb-4">Danh sách khách hàng</h6>
+                        <a href="{{route('customer.create')}}"><button type="submit" class="btn btn-success">Thêm mới</button></a>
                         <table class="table table-dark">
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Full Name</th>
-                                <th>Phone Number</th>
+                                <th>Họ & Tên</th>
+                                <th>Số điện thoại</th>
                                 <th>Email</th>
-                                <th>Address</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
+                                <th>Địa chỉ</th>
+                                <th>CMND/CCCD</th>
+                                <th>Sửa</th>
+                                <th>Xóa</th>
                             </tr>
                             </thead>
                             @foreach($customers as $customer)
@@ -81,12 +82,13 @@
                                     <td>+84 {{ $customer->phone}}</td>
                                     <td>{{ $customer->email}}</td>
                                     <td>{{ $customer->address}}</td>
-                                    <td><a href="{{ route('customer.edit', $customer->id) }}"><button type="submit" class="btn btn-info">Edit</button></a> </td>
+                                    <td>{{ $customer->id_card}}</td>
+                                    <td><a href="{{ route('customer.edit', $customer->id) }}"><button type="submit" class="btn btn-info">Sửa</button></a> </td>
                                     <td>
                                         <form method="post" action="{{ route('customer.destroy', $customer->id) }}">
                                             @method('DELETE')
                                             @csrf
-                                            <button type="submit" class="btn btn-primary">Delete</button>
+                                            <button type="submit" class="btn btn-primary">Xóa</button>
                                         </form>
                                     </td>
                                 </tr>

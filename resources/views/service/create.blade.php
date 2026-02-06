@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Add New Service - H2T Hotel</title>
+    <title>Thêm dịch vụ - Khách sạn Việt Thành</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -50,19 +50,19 @@
                         @csrf
                         <div class="mb-3">
                             <div class="mb-3">
-                                <label for="name" class="form-label">Name <span>*</span></label>
-                                <input type="text" maxlength="50" required placeholder="enter name service" class="form-control " name="name" required>
+                                <label for="name" class="form-label">Tên dịch vụ <span>*</span></label>
+                                <input type="text" maxlength="50" required placeholder="Nhập tên dịch vụ" class="form-control " name="name" required>
                             </div>
-                            <label for="image" class="form-label">Image <span>*</span></label>
+                            <label for="image" class="form-label">Ảnh <span>*</span></label>
                             <input type="text" class="form-control" name="image" required>
                         </div>
                         <div class="mb-3">
-                            <label for="price" class="form-label">Price <span>*</span></label>
-                            <input type="int" maxlength="50" required placeholder="enter price service" class="form-control" name="price" required></div>
+                            <label for="price" class="form-label">Giá <span>*</span></label>
+                            <input type="int" maxlength="50" required placeholder="Nhập giá dịch vụ" class="form-control" name="price" required></div>
                         <div class="mb-3">
-                            <label for="describe" class="form-label">Describe <span>*</span></label>
-                            <input type="text" maxlength="255" required placeholder="enter describe" class="form-control" name="describe" required></div>
-                        <button type="submit" class="btn btn-success">Add New</button>
+                            <label for="description" class="form-label">Mô tả <span>*</span></label>
+                            <input type="text" maxlength="255" required placeholder="Nhập mô tả dịch vụ" class="form-control" name="description" required></div>
+                        <button type="submit" class="btn btn-success">Thêm mới</button>
                     </form>
                 </div>
             </div>

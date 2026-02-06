@@ -50,7 +50,7 @@ class ServiceController extends Controller
         $obj->name = $request->name;
         $obj->image = $request->image;
         $obj->price = $request->price;
-        $obj->describe = $request->describe;
+        $obj->description = $request->description;
         //Gọi function để lưu dữ liệu lên db trong model
         $obj->store();
         // Notification
@@ -105,7 +105,7 @@ class ServiceController extends Controller
         $obj->name = $request->name;
         $obj->image = $request->image;
         $obj->price = $request->price;
-        $obj->describe = $request->describe;
+        $obj->description = $request->description;
         // Goi function update du lieu trong model
         $obj->updateService();
         flash()->addSuccess('Edited Successfully');

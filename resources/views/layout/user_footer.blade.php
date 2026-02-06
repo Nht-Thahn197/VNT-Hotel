@@ -9,16 +9,16 @@
             <a href="tel:09150066555"><i class="fas fa-phone"></i> 09150066555</a>
             <a href="mailto:nhatthanh197203@gmail.com"><i class="fas fa-envelope"></i> nhatthanh197203@gmail.com</a>
             <a href="mailto:hoangthu@gmail.com"><i class="fas fa-envelope"></i> hoangthu@gmail.com</a>
-            <a href="#"><i class="fas fa-map-marker-alt"></i> HaNoi, VietNam </a>
+            <a href="#"><i class="fas fa-map-marker-alt"></i> Hà Nội, Việt Nam </a>
         </div>
 
         <div class="box">
-            <a href="#home">home</a>
-            <a href="#about">about</a>
-            <a href="#reservation">reservation</a>
-            <a href="#gallery">gallery</a>
-            <a href="#contact">contact</a>
-            <a href="#reviews">reviews</a>
+            <a href="#home">Trang chủ</a>
+            <a href="#about">Giới thiệu</a>
+            <a href="#reservation">Đặt phòng</a>
+            <a href="#gallery">Thư viện ảnh</a>
+            <a href="#contact">Liên hệ</a>
+            <a href="#reviews">Đánh giá</a>
         </div>
 
         <div class="box">
@@ -31,7 +31,7 @@
 
     </div>
 
-    <div class="credit">&copy; copyright @ 2023 by Hoang  Thu and Nhat Thanh  | all rights reseved!</div>
+    <div class="credit">&copy; copyright @ 2023 by Hoang  Thu and Nhat Thanh  | đã bảo lưu tất cả quyền!</div>
 
 </section>
 

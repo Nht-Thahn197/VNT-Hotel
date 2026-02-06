@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Invoice Detail - H2T Hotel</title>
+    <title>Chi tiết hóa đơn - Khách sạn Việt Thành</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -58,27 +58,29 @@
             <div class="row g-4">
                 <div class="col-sm-12 col-xl-12">
                     <div class="bg-secondary rounded h-100 p-4">
-                        <h6 class="mb-4">Invoice Detail</h6>
+                        <h6 class="mb-4">Chi tiết hóa đơn</h6>
                         <table class="table table-dark">
                             <thead>
                             <tr>
-                                <th>Price</th>
-                                <th>Amount People</th>
-                                <th>Time Check-in</th>
-                                <th>Time Check-out</th>
-                                <th>Room Number</th>
-                                <th></th>
+                                <th>Mô tả</th>
+                                <th>Số lượng</th>
+                                <th>Đơn giá</th>
+                                <th>Tổng tiền</th>
+                                <th>Check in</th>
+                                <th>Check out</th>
+                                <th>Số phòng</th>
                             </tr>
                             </thead>
                             @foreach($invoicedetails as $invoicedetail)
                                 @method('PUT')
                                 <tr>
-                                    <td>{{number_format($invoicedetail->price) }}</td>
-                                    <td>{{ $invoicedetail->total}}</td>
+                                    <td>{{ $invoicedetail->description}}</td>
+                                    <td>{{ $invoicedetail->quantity}}</td>
+                                    <td>{{number_format($invoicedetail->unit_price) }}</td>
+                                    <td>{{number_format($invoicedetail->total) }}</td>
                                     <td>{{ $invoicedetail->time_start}}</td>
                                     <td>{{ $invoicedetail->time_end}}</td>
                                     <td>{{ $invoicedetail->room_name}}</td>
-                                    <td><a href="{{ route('invoicedetail.edit', $invoicedetail->id) }}"><button type="submit" class="btn btn-info">Select Room</button></a> </td>
                                 </tr>
                             @endforeach
                         </table>

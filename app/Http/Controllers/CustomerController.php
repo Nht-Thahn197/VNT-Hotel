@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateCustomerRequest;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Arr;
 
@@ -54,7 +55,12 @@ class CustomerController extends Controller
         $obj->phone = $request->phone;
         $obj->email = $request->email;
         $obj->address = $request->address;
-        $obj->password = $request->password;
+        if ($request->filled('password')) {
+            $obj->password = bcrypt($request->password);
+        } else {
+            $obj->password = DB::table('customer')->where('id', $request->id)->value('password');
+        }
+        $obj->id_card = $request->id_card;
         //Gọi function để lưu dữ liệu lên db trong model
         $array = array();
         $array = Arr::add($array, 'name', $request->name);
@@ -62,6 +68,7 @@ class CustomerController extends Controller
         $array = Arr::add($array, 'email', $request->email);
         $array = Arr::add($array, 'address', $request->address);
         $array = Arr::add($array, 'password', bcrypt($request->password));
+        $array = Arr::add($array, 'id_card', $request->id_card);
 
         Customer::create($array);
         //
@@ -118,6 +125,7 @@ class CustomerController extends Controller
         $obj->email = $request->email;
         $obj->address = $request->address;
         $obj->password = $request->password;
+        $obj->id_card = $request->id_card;
         // Goi function update du lieu trong model
         $obj->updateCustomer();
         //
@@ -175,26 +183,26 @@ class CustomerController extends Controller
             return Redirect::back();
         }
     }
+
+    public function logout(Request $request)
+    {
+        Auth::guard('customer')->logout();
+        $request->session()->forget('customer');
+        return Redirect::route('home.index');
+    }
     public function cancel($id)
     {
-        // Lấy thông tin đơn hàng từ CSDL
-        $invoice = invoice::find($id);
-
-        // Kiểm tra trạng thái của đơn hàng
-        if ($invoice->status == 0 || $invoice->status == 1) {
-            // Nếu trạng thái là 3 (Đang giao hàng), thì chuyển sang trạng thái 4 (Đã giao hàng cho khách)
-            $invoice->status = 4;
-            $invoice->save();
-
-            return redirect()->back()->with('success', 'Bạn đã hủy đơn hàng thành công');
-        } elseif ($invoice->status == 3 || $invoice->status == 4 || $invoice->status == 5)
-
-        {
-            // Nếu trạng thái là 5 hoặc 6 (Hoàn Thành Đơn Hàng hoặc Hủy đơn hàng), không thực hiện thay đổi và thông báo lỗi
-            return redirect()->back()->with('error', 'Không thể hủy đơn hàng với trạng thái hiện tại');
-        } else {
-            // Trường hợp còn lại, không thực hiện thay đổi và thông báo lỗi
-            return redirect()->back()->with('error', 'Không thể thực hiện với trạng thái hiện tại');
+        $booking = \App\Models\Booking::find($id);
+        if (!$booking) {
+            return redirect()->back()->with('error', 'Booking not found.');
         }
+
+        if (in_array($booking->booking_status, [0, 1], true)) {
+            $booking->booking_status = 4;
+            $booking->save();
+            return redirect()->back()->with('success', 'Da huy booking thanh cong.');
+        }
+
+        return redirect()->back()->with('error', 'Khong the huy booking voi trang thai hien tai.');
     }
 }

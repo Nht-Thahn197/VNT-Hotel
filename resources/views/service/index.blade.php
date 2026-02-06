@@ -3,13 +3,13 @@
 
 <head>
     <meta charset="utf-8">
-    <title>List of Services - H2T Hotel</title>
+    <title>Danh sách dịch vụ - Khách sạn Việt Thành</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="img/icon2.jpg" rel="icon">
+    <link href="{{asset('img/icon2.jpg')}}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -56,18 +56,18 @@
         <div class="row g-4">
             <div class="col-sm-12 col-xl-12">
                 <div class="bg-secondary rounded h-100 p-4">
-                    <h6 class="mb-4">List of Service</h6>
-                    <a href="{{route('service.create')}}"><button type="submit" class="btn btn-success">Add New</button></a>
+                    <h6 class="mb-4">Danh sách dịch vụ</h6>
+                    <a href="{{route('service.create')}}"><button type="submit" class="btn btn-success">Thêm mới</button></a>
                     <table class="table table-dark">
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Image</th>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Describe</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th>Ảnh</th>
+                            <th>Tên dịch vụ</th>
+                            <th>Giá</th>
+                            <th>Mô tả</th>
+                            <th>Sửa</th>
+                            <th>Xóa</th>
                         </tr>
                         </thead>
                         @foreach($services as $service)
@@ -75,14 +75,14 @@
                                 <td>{{ $service->id}}</td>
                                 <td>{{ $service->image}}</td>
                                 <td>{{ $service->name}}</td>
-                                <td>{{number_format($service->price) }} VND</td>
-                                <td>{{ $service->describe}}</td>
-                                <td><a href="{{ route('service.edit', $service->id) }}"><button type="submit" class="btn btn-info">Edit</button></a> </td>
+                                <td>{{number_format($service->price) }} VNĐ</td>
+                                <td>{{ $service->description}}</td>
+                                <td><a href="{{ route('service.edit', $service->id) }}"><button type="submit" class="btn btn-info">Sửa</button></a> </td>
                                 <td>
                                     <form method="post" action="{{ route('service.destroy', $service->id) }}">
                                         @method('DELETE')
                                         @csrf
-                                        <button type="submit" class="btn btn-primary">Delete</button>
+                                        <button type="submit" class="btn btn-primary">Xóa</button>
                                     </form>
                                 </td>
                             </tr>

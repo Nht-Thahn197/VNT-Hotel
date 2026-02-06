@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Edit Type Room - H2T Hotel</title>
+    <title>Sửa thông tin loại phòng - Khách sạn Việt Thành</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -51,14 +51,20 @@
                         @method('PUT')
                         @csrf
                         @foreach($typerooms as $typeroom)
-                            <div class="mb-3"> <label for="name" class="form-label">Name</label>
+                            <div class="mb-3"> <label for="name" class="form-label">Tên loại phòng</label>
                                 <input type="text" class="form-control" name="name" value="{{$typeroom->name}}"></div>
-                            <div class="mb-3"><label for="price" class="form-label">Price</label>
-                                <input type="int" class="form-control" name="price" value="{{$typeroom->price}}"></div>
-                            <div class="mb-3"><label for="guest" class="form-label">Maximum of Guest</label>
+                            <div class="mb-3"><label for="price_hour" class="form-label">Giá theo giờ</label>
+                                <input type="int" class="form-control" name="price_hour" value="{{$typeroom->price_hour}}"></div>
+                            <div class="mb-3"><label for="price_overnight" class="form-label">Giá qua đêm</label>
+                                <input type="int" class="form-control" name="price_overnight" value="{{$typeroom->price_overnight}}"></div>
+                            <div class="mb-3"><label for="price_night" class="form-label">Giá theo đêm</label>
+                                <input type="int" class="form-control" name="price_night" value="{{$typeroom->price_night}}"></div>
+                            <div class="mb-3"><label for="max_guest" class="form-label">Số khách tối đa</label>
+                                <input type="int" class="form-control" name="max_guest" value="{{$typeroom->max_guest}}"></div>
+                            <div class="mb-3"><label for="guest" class="form-label">Số khách</label>
                                 <input type="int" class="form-control" name="guest" value="{{$typeroom->guest}}"></div>
                          @endforeach
-                        <button type="submit" class="btn btn-success">Update</button>
+                        <button type="submit" class="btn btn-success">Cập nhật</button>
                     </form>
                 </div>
             </div>

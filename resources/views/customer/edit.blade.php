@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Edit Customer - H2T Hotel</title>
+    <title>Cập nhật thông tin - Khách sạn Việt Thành</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -51,18 +51,20 @@
                         @method('PUT')
                         @csrf
                         @foreach($customers as $customer)
-                            <div class="mb-3"> <label for="name" class="form-label">Full Name</label>
+                            <div class="mb-3"> <label for="name" class="form-label">Họ & Tên</label>
                                 <input type="text" class="form-control" name="name" value="{{$customer->name}}"></div>
-                            <div class="mb-3"><label for="phone" class="form-label">Phone Number</label>
+                            <div class="mb-3"><label for="phone" class="form-label">Số điện thoại</label>
                                 <input type="int" class="form-control" name="phone" value="{{$customer->phone}}"></div>
                             <div class="mb-3"><label for="email" class="form-label">Email</label>
                                 <input type="text" class="form-control" name="email" value="{{$customer->email}}"></div>
-                            <div class="mb-3"><label for="address" class="form-label">Address</label>
+                            <div class="mb-3"><label for="address" class="form-label">Địa chỉ</label>
                                 <input type="text" class="form-control" name="address" value="{{$customer->address}}"></div>
-                            <div class="mb-3"><label for="password" class="form-label">Password</label>
-                                <input type="text" class="form-control" name="password" value="{{$customer->password}}"></div>
+                            <div class="mb-3"><label for="id_card" class="form-label">CMND/CCCD</label>
+                                <input type="text" class="form-control" name="id_card" value="{{$customer->id_card}}"></div>
+                            <div class="mb-3"><label for="password" class="form-label">Mật khẩu</label>
+                                <input type="password" class="form-control" name="password" value="" placeholder=""></div>
                         @endforeach
-                        <button type="submit" class="btn btn-success">Update</button>
+                        <button type="submit" class="btn btn-success">Cập nhật</button>
                     </form>
                 </div>
             </div>

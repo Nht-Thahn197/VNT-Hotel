@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Kinds of Room - H2T Hotel</title>
+    <title>Loại phòng - Khách sạn Việt Thành</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -56,31 +56,37 @@
         <div class="row g-4">
             <div class="col-sm-12 col-xl-12">
                 <div class="bg-secondary rounded h-100 p-4">
-                    <h6 class="mb-4">Kinds of Room</h6>
-                    <a href="{{route('typeroom.create')}}"><button type="submit" class="btn btn-success">Add New</button></a>
+                    <h6 class="mb-4">Loại phòng</h6>
+                    <a href="{{route('typeroom.create')}}"><button type="submit" class="btn btn-success">Thêm mới</button></a>
                     <table class="table table-dark">
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Maximum of guests</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th>Tên loại phòng</th>
+                            <th>Giá theo giờ</th>
+                            <th>Giá qua đêm</th>
+                            <th>Giá theo đêm</th>
+                            <th>Số khách tối đa</th>
+                            <th>Số khách hiện tại</th>
+                            <th>Sửa</th>
+                            <th>Xóa</th>
                         </tr>
                         </thead>
                         @foreach($typerooms as $typeroom)
                             <tr>
                                 <td>{{ $typeroom->id}}</td>
                                 <td>{{ $typeroom->name}}</td>
-                                <td>{{number_format($typeroom->price) }} VND</td>
+                                <td>{{number_format($typeroom->price_hour) }} VNĐ</td>
+                                <td>{{number_format($typeroom->price_overnight) }} VNĐ</td>
+                                <td>{{number_format($typeroom->price_night) }} VNĐ</td>
+                                <td>{{ $typeroom->max_guest}}</td>
                                 <td>{{ $typeroom->guest}}</td>
-                                <td><a href="{{ route('typeroom.edit', $typeroom->id) }}"><button type="submit" class="btn btn-info">Edit</button></a> </td>
+                                <td><a href="{{ route('typeroom.edit', $typeroom->id) }}"><button type="submit" class="btn btn-info">Sửa</button></a> </td>
                                 <td>
                                     <form method="post" action="{{ route('typeroom.destroy', $typeroom->id) }}">
                                         @method('DELETE')
                                         @csrf
-                                        <button type="submit" class="btn btn-primary">Delete</button>
+                                        <button type="submit" class="btn btn-primary">Xóa</button>
                                     </form>
                                 </td>
                             </tr>

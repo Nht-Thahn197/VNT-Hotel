@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Invoice Service - H2T Hotel</title>
+    <title>Danh sách tầng - Khách sạn Việt Thành</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -58,22 +58,41 @@
             <div class="row g-4">
                 <div class="col-sm-12 col-xl-12">
                     <div class="bg-secondary rounded h-100 p-4">
-                        <h6 class="mb-4">Invoice Service</h6>
+                        <h6 class="mb-4">Danh sách tầng</h6>
+                        <a href="{{route('floor.create')}}"><button type="submit" class="btn btn-success">Add New</button></a>
                         <table class="table table-dark">
                             <thead>
                             <tr>
-                                <th>ID Invoice</th>
-                                <th>Name Service</th>
-                                <th>Time Order</th>
-                                <th>Amount</th>
+                                <th>#</th>
+                                <th>Tên tầng</th>
+                                <th>Mô tả</th>
+                                <th>Trạng thái</th>
+                                <th>Sửa</th>
+                                <th>Xóa</th>
                             </tr>
                             </thead>
-                            @foreach($serviceinvoices as $serviceinvoice)
+                            @foreach($floors as $floor)
                                 <tr>
-                                    <td>{{ $serviceinvoice->invoicedetail_id}}</td>
-                                    <td>{{ $serviceinvoice->ser_name}}</td>
-                                    <td>{{ $serviceinvoice->time}}</td>
-                                    <td>{{ $serviceinvoice->amout}}</td>
+                                    <td>{{ $floor->id }}</td>
+                                    <td>{{ $floor->name }}</td>
+                                    <td>{{ $floor->description }}</td>
+                                    <td>
+                                        @if($floor->status == 1)
+                                            {{ 'Active' }}
+                                        @elseif($floor->status == 0)
+                                            {{ 'Inactive' }}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('floor.edit', $floor->id) }}"><button type="submit" class="btn btn-info">Sửa</button></a>
+                                    </td>
+                                    <td>
+                                        <form method="post" action="{{ route('floor.destroy', $floor->id) }}">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button type="submit" class="btn btn-primary">Xóa</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                         </table>

@@ -9,14 +9,12 @@ use Illuminate\Support\Facades\DB;
 class ServiceInvoice extends Model
 {
     use HasFactory;
-    protected $table = 'service_invoices';
+    protected $table = 'invoice_detail';
 
     public function index(){
         // Query lay du lieu
-        $serviceinvoices = DB::table('service_invoices')
-            ->join('services', 'service_invoices.ser_id', '=', 'services.id')
-            ->select('service_invoices.*',
-            'services.name as ser_name')
+        $serviceinvoices = DB::table('invoice_detail')
+            ->select('invoice_detail.*')
             ->get();
         // Tra ve du lieu
         return $serviceinvoices;

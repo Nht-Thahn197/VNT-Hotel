@@ -9,38 +9,44 @@ use Illuminate\Support\Facades\DB;
 class RoomType extends Model
 {
     use HasFactory;
-    protected $table = "room_types";
+    protected $table = "room_type";
     public function index(){
         // Query lay du lieu
-        $typerooms =DB::table('room_types')->get();
+        $typerooms =DB::table('room_type')->get();
         // Tra ve du lieu
         return $typerooms;
     }
     public function store(){
         // query builder uufng để lưu dữ liệu
-        DB::table('room_types')->insert([
+        DB::table('room_type')->insert([
             'name' => $this->name,
-            'price' => $this->price,
+            'price_hour' => $this->price_hour,
+            'price_overnight' => $this->price_overnight,
+            'price_night' => $this->price_night,
+            'max_guest' => $this->max_guest,
             'guest' => $this->guest,
         ]);
     }
     public function edit(){
-        $typerooms = DB::table('room_types')
+        $typerooms = DB::table('room_type')
             ->where('id',$this->id)
             ->get();
         return $typerooms;
     }
     public function updateTyperoom(){
         // query builder de update du lieu
-        DB::table('room_types')->where('id', $this->id)
+        DB::table('room_type')->where('id', $this->id)
             ->update([
                 'name' => $this->name,
-                'price' => $this->price,
+                'price_hour' => $this->price_hour,
+                'price_overnight' => $this->price_overnight,
+                'price_night' => $this->price_night,
+                'max_guest' => $this->max_guest,
                 'guest' => $this->guest,
             ]);
     }
     public function destroyTyperoom(){
-        DB::table('room_types')
+        DB::table('room_type')
             ->where('id', $this->id)
             ->delete();
     }

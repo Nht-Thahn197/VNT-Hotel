@@ -51,21 +51,23 @@
                         @method('PUT')
                         @csrf
                         <div class="mb-3">
-                            @foreach($invoicedetails as $invoicedetail)
-                                <input type="hidden" value="{{$invoicedetail->id}}" name="invoice_id">
-                                <label class="form-label">Type Room: </label> <select name="room_name" class="form-select">
+                            <input type="hidden" value="{{$booking->id}}" name="booking_id">
+                            <label class="form-label">Room: </label>
+                            <select name="room_id" class="form-select">
+                                @if($rooms->isEmpty())
+                                    <option value="" disabled selected>Khong co phong trong</option>
+                                @else
                                     @foreach($rooms as $room)
-
-                                        <option name="room_id" value="{{ $room->id }}"
-                                        @if($room->id == $invoicedetail->room_id)
-                                            {{'selected'}}
+                                        <option value="{{ $room->id }}"
+                                            @if($room->id == $booking->room_id)
+                                                {{'selected'}}
                                             @endif>
                                             {{ $room->name }}
                                         </option>
                                     @endforeach
-                                </select>
+                                @endif
+                            </select>
                         </div>
-                        @endforeach
                         <button type="submit" class="btn btn-success">Select</button>
                     </form>
                 </div>

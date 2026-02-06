@@ -7,6 +7,7 @@ use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Arr;
 
@@ -52,13 +53,21 @@ class AdminController extends Controller
         $obj->name = $request->name;
         $obj->phone = $request->phone;
         $obj->email = $request->email;
-        $obj->password = $request->password;
+        if ($request->filled('password')) {
+            $obj->password = bcrypt($request->password);
+        } else {
+            $obj->password = DB::table('user')->where('id', $request->id)->value('password');
+        }
+        $obj->role = $request->role;
+        $obj->status = $request->status;
         //Gọi function để lưu dữ liệu lên db trong model
         $array = array();
         $array = Arr::add($array, 'name', $request->name);
         $array = Arr::add($array, 'phone', $request->phone);
         $array = Arr::add($array, 'email', $request->email);
         $array = Arr::add($array, 'password', bcrypt($request->password));
+        $array = Arr::add($array, 'role', $request->role);
+        $array = Arr::add($array, 'status', $request->status);
 
         Admin::create($array);
         //Notification
@@ -115,6 +124,8 @@ class AdminController extends Controller
         $obj->phone = $request->phone;
         $obj->email = $request->email;
         $obj->password = $request->password;
+        $obj->role = $request->role;
+        $obj->status = $request->status;
         // Goi function update du lieu trong model
         $obj->updateAdmin();
         //

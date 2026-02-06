@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>List of Room - H2T Hotel</title>
+    <title>Danh sách phòng - Khách sạn Việt Thành</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -58,33 +58,47 @@
             <div class="row g-4">
                 <div class="col-sm-12 col-xl-12">
                     <div class="bg-secondary rounded h-100 p-4">
-                        <h6 class="mb-4">List of Room</h6>
-                        <a href="{{route('room.create')}}"><button type="submit" class="btn btn-success">Add New</button></a>
+                        <h6 class="mb-4">Danh sách phòng</h6>
+                        <a href="{{route('room.create')}}"><button type="submit" class="btn btn-success">Thêm mới</button></a>
                         <table class="table table-dark">
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Room Number</th>
-                                <th>Floor</th>
-                                <th>Status</th>
-                                <th>Type Room</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
+                                <th>Số phòng</th>
+                                <th>Tầng</th>
+                                <th>Trạng thái</th>
+                                <th>Loại phòng</th>
+                                <th>Sửa</th>
+                                <th>Xóa</th>
                             </tr>
                             </thead>
                             @foreach($rooms as $room)
                                 <tr>
                                     <td>{{ $room->id}}</td>
                                     <td>{{ $room->name}}</td>
-                                    <td>{{ $room->floor}}</td>
-                                    <td>{{ $room->status}}</td>
+                                    <td>{{ $room->floor_name ?? $room->floor_id }}</td>
+                                    <td>
+                                        @if($room->status == 0)
+                                            {{ "Available" }}
+                                        @elseif($room->status == 1)
+                                            {{ "Reserved" }}
+                                        @elseif($room->status == 2)
+                                            {{ "Occupied" }}
+                                        @elseif($room->status == 3)
+                                            {{ "Cleaning" }}
+                                        @elseif($room->status == 4)
+                                            {{ "Maintenance" }}
+                                        @elseif($room->status == 5)
+                                            {{ "Disabled" }}
+                                        @endif
+                                    </td>
                                     <td>{{ $room->roomtype_name}}</td>
-                                    <td><a href="{{ route('room.edit', $room->id) }}"><button type="submit" class="btn btn-info">Edit</button></a> </td>
+                                    <td><a href="{{ route('room.edit', $room->id) }}"><button type="submit" class="btn btn-info">Sửa</button></a> </td>
                                     <td>
                                         <form method="post" action="{{ route('room.destroy', $room->id) }}">
                                             @method('DELETE')
                                             @csrf
-                                            <button type="submit" class="btn btn-primary">Delete</button>
+                                            <button type="submit" class="btn btn-primary">Xóa</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -124,3 +138,4 @@
 </body>
 
 </html>
+

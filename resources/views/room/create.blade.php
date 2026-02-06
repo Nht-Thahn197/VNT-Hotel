@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Add New Room - H2T Hotel</title>
+    <title>Thêm phòng mới - Khách sạn Việt Thành</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -50,7 +50,7 @@
                     <form method="post" action="{{ Route('room.store') }}">
                         @csrf
                         <div class="mb-3">
-                            <label for="roomtype_id" class="form-label">Type Room <span>*</span></label>
+                            <label for="roomtype_id" class="form-label">Loại phòng <span>*</span></label>
                                 <select name="roomtype_id" class="form-select">
                                     @foreach($typerooms as $typeroom)
                                         <option  value="{{$typeroom->id}}">
@@ -60,18 +60,31 @@
                                 </select>
                         </div>
                         <div class="mb-3">
-                            <label for="floor" class="form-label">Floor <span>*</span></label>
-                            <input type="text" maxlength="50" required placeholder="enter floor" class="form-control" name="floor" required>
+                            <label for="floor_id" class="form-label">Tầng <span>*</span></label>
+                            <select name="floor_id" class="form-select" required>
+                                @foreach($floors as $floor)
+                                    <option value="{{ $floor->id }}">
+                                        {{ $floor->name }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="mb-3">
-                            <label for="name" class="form-label">Name <span>*</span></label>
-                            <input type="text" maxlength="50" required placeholder="enter Room Number" class="form-control" name="name" required>
+                            <label for="name" class="form-label">Tên phòng <span>*</span></label>
+                            <input type="text" maxlength="50" required placeholder="Nhập số phòng" class="form-control" name="name" required>
                         </div>
                         <div class="mb-3">
-                            <label for="status" class="form-label">Status <span>*</span></label>
-                            <input type="text" class="form-control" required placeholder="Status" name="status" required>
+                            <label for="status" class="form-label">Trạng thái <span>*</span></label>
+                            <select name="status" class="form-select" required>
+                                <option value="0">Available</option>
+                                <option value="1">Reserved</option>
+                                <option value="2">Occupied</option>
+                                <option value="3">Cleaning</option>
+                                <option value="4">Maintenance</option>
+                                <option value="5">Disabled</option>
+                            </select>
                         </div>
-                        <button type="submit" class="btn btn-success">Add New</button>
+                        <button type="submit" class="btn btn-success">Thêm mới</button>
                     </form>
                 </div>
             </div>
@@ -97,3 +110,4 @@
 </body>
 
 </html>
+

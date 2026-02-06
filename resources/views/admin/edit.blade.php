@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Edit Admin - D2T Hotel</title>
+    <title>Sửa nhân viên - VNT-Hotel</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -51,16 +51,27 @@
                         @method('PUT')
                         @csrf
                         @foreach($admins as $admin)
-                            <div class="mb-3"> <label for="name" class="form-label">Full Name</label>
+                            <div class="mb-3"> <label for="name" class="form-label">Họ & Tên</label>
                                 <input type="text" class="form-control" name="name" value="{{$admin->name}}"></div>
-                            <div class="mb-3"><label for="phone" class="form-label">Phone Number</label>
+                            <div class="mb-3"><label for="phone" class="form-label">Số điện thoại</label>
                                 <input type="int" class="form-control" name="phone" value="{{$admin->phone}}"></div>
                             <div class="mb-3"><label for="email" class="form-label">Email</label>
                                 <input type="text" class="form-control" name="email" value="{{$admin->email}}"></div>
-                            <div class="mb-3"><label for="password" class="form-label">Password</label>
-                                <input type="text" class="form-control" name="password" value="{{$admin->password}}"></div>
+                            <div class="mb-3"><label for="role" class="form-label">Role</label>
+                                <input type="text" class="form-control" name="role" value="{{$admin->role}}"></div>
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Trạng thái</label>
+                                <select name="status" class="form-select" required>
+                                    <option value="0" @if($admin->status == 0) selected @endif>Inactive</option>
+                                    <option value="1" @if($admin->status == 1) selected @endif>Active</option>
+                                    <option value="2" @if($admin->status == 2) selected @endif>Blocked</option>
+                                    <option value="3" @if($admin->status == 3) selected @endif>Deleted</option>
+                                </select>
+                            </div>
+                            <div class="mb-3"><label for="password" class="form-label">Mật khẩu</label>
+                                <input type="password" class="form-control" name="password" value="" placeholder=""></div>
                         @endforeach
-                        <button type="submit" class="btn btn-success">Update</button>
+                        <button type="submit" class="btn btn-success">Cập nhật</button>
                     </form>
                 </div>
             </div>
@@ -88,3 +99,4 @@
 </body>
 
 </html>
+

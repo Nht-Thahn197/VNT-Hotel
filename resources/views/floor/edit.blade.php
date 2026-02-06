@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Thêm nhân viên - VNT-Hotel</title>
+    <title>Sửa tầng - Khách sạn Việt Thành</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -47,48 +47,39 @@
         <div class="row g-4">
             <div class="col-sm-12 col-xl-12">
                 <div class="bg-secondary rounded h-100 p-4">
-                    <form method="post" action="{{ Route('admin.store') }}">
+                    <form method="post" action="">
+                        @method('PUT')
                         @csrf
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Họ & Tên <span>*</span></label>
-                            <input type="text" maxlength="50" required placeholder="Nhập họ tên nhân viên" class="form-control" name="name" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="phone" class="form-label">Số điện thoại <span>*</span></label>
-                            <input type="int" maxlength="10" required placeholder="Nhập số điện thoại nhân viên" class="form-control" name="phone" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email <span>*</span></label>
-                            <input type="email" maxlength="50" required placeholder="Nhập email nhân viên" class="form-control" name="email" aria-describedby="emailHelp" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="role" class="form-label">Chức vụ <span>*</span></label>
-                            <input type="text" maxlength="50" required placeholder="Nhập chức vụ nhân viên" class="form-control" name="role" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="status" class="form-label">Trạng thái <span>*</span></label>
-                            <select name="status" class="form-select" required>
-                                <option value="0">Inactive</option>
-                                <option value="1">Active</option>
-                                <option value="2">Blocked</option>
-                                <option value="3">Deleted</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Mật khẩu <span>*</span></label>
-                            <input type="text" maxlength="50" required placeholder="Nhập mật khẩu nhân viên" class="form-control" name="password" required>
-                        </div>
-                        <button type="submit" class="btn btn-success">Thêm mới</button>
+                        @foreach($floors as $floor)
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Tên tầng</label>
+                                <input type="text" class="form-control" name="name" value="{{$floor->name}}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Mô tả</label>
+                                <input type="text" class="form-control" name="description" value="{{$floor->description}}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Trạng thái</label>
+                                <select name="status" class="form-select" required>
+                                    <option value="1" @if($floor->status == 1) selected @endif>Active</option>
+                                    <option value="0" @if($floor->status == 0) selected @endif>Inactive</option>
+                                </select>
+                            </div>
+                        @endforeach
+                        <button type="submit" class="btn btn-success">Cập nhật</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- Footer Start -->
     @include('layout.footer')
     <!-- Footer End -->
 </div>
 
+<!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{{asset('lib/chart/chart.min.js')}}"></script>
@@ -104,5 +95,3 @@
 </body>
 
 </html>
-
-

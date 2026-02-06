@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page - H2T Hotel</title>
+    <title>Trang chủ - Khách sạn Việt Thành</title>
 
-    <link href="img/icon2.jpg" rel="icon">
+    <link href="{{asset('favicon-home.ico')}}" rel="icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
@@ -17,21 +17,25 @@
 
 <section class="header">
     <div class="flex">
-        <a href="{{route('home.index')}}" class="logo">H2T Hotel</a>
-        <a href="{{route('customer.login')}}" class="btn">Log out</a>
+        <a href="{{route('home.index')}}" class="logo">Khách sạn Việt Thành</a>
+        @if(session()->has('customer'))
+        <a href="{{route('customer.logout')}}" class="btn">Đăng xuất</a>
+        @else
+        <a href="{{route('customer.login')}}" class="btn">Đăng nhập</a>
+        @endif
         <div id="menu-btn" class="fas fa-bars"></div>
     </div>
 
     <nav class="navbar">
-        <a href="home#home">home</a>
-        <a href="home#about">about</a>
-        <a href="home#reservation">reservation</a>
-        <a href="home#gallery">gallery</a>
-        <a href="home#contact">contact</a>
-        <a href="home#reviews">reviews</a>
-        @foreach($customers as $customer)
-        <a href="{{route('home.booking', $customer->id)}}">my bookings</a>
-        @endforeach
+        <a href="home#home">Trang chủ</a>
+        <a href="home#about">Giới thiệu</a>
+        <a href="home#reservation">Đặt phòng</a>
+        <a href="home#gallery">ình ảnh</a>
+        <a href="home#contact">Liên hệ</a>
+        <a href="home#reviews">Đánh giá</a>
+        @if(session()->has('customer'))
+        <a href="{{route('home.booking', session('customer')->id)}}">Lịch sử</a>
+        @endif
     </nav>
 </section>
     <!-- home section starts  -->
@@ -48,15 +52,15 @@
             <div class="box swiper-slide">
                 <img src="{{asset('img/home-img-2.jpg')}}" alt="">
                 <div class="flex">
-                    <h3>foods and drinks</h3>
-                    <a href="#reservation" class="btn">make a reservation</a>
+                    <h3>Thức ăn và đồ uống</h3>
+                    <a href="#reservation" class="btn">Đặt Phòng</a>
                 </div>
             </div>
             <div class="box swiper-slide">
                 <img src="{{asset('img/home-img-3.jpg')}}" alt="">
                 <div class="flex">
-                    <h3>luxurious halls</h3>
-                    <a href="#contact" class="btn">contact us</a>
+                    <h3>Hội trường sang trọng</h3>
+                    <a href="#contact" class="btn">Liên hệ</a>
                 </div>
             </div>
         </div>
@@ -119,9 +123,9 @@
             <img src="{{asset('img/about-img-1.jpg')}}" alt="">
         </div>
         <div class="content">
-            <h3>best staff</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi laborum maxime eius aliquid temporibus unde?</p>
-            <a href="#reservation" class="btn">make a reservation</a>
+            <h3>Nhân viên thân thiện</h3>
+            <p>Đội ngũ nhân viên chuyên nghiệp, thân thiện và nhiệt tình phục vụ khách hàng.</p>
+            <a href="#reservation" class="btn">Đặt phòng</a>
         </div>
     </div>
     <div class="row revers">
@@ -129,9 +133,9 @@
             <img src="{{asset('img/about-img-2.jpg')}}" alt="">
         </div>
         <div class="content">
-            <h3>best foods</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi laborum maxime eius aliquid temporibus unde?</p>
-            <a href="#contact" class="btn">contact us</a>
+            <h3>Đồ ăn ngon nhất</h3>
+            <p>Thực đơn đa dạng với các món ăn truyền thống và hiện đại, được chế biến bởi đầu bếp chuyên nghiệp.</p>
+            <a href="#contact" class="btn">Liên hệ</a>
         </div>
     </div>
     <div class="row">
@@ -139,9 +143,9 @@
             <img src="{{asset('img/about-img-3.jpg')}}" alt="">
         </div>
         <div class="content">
-            <h3>swimming pool</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi laborum maxime eius aliquid temporibus unde?</p>
-            <a href="#availability" class="btn">check availability</a>
+            <h3>Tiệc bể bơi</h3>
+            <p>Không gian tiệc bể bơi sang trọng, lý tưởng cho các sự kiện đặc biệt và buổi tiệc ngoài trời.</p>
+            <a href="#availability" class="btn">Tham khảo</a>
         </div>
     </div>
 </section>
@@ -151,99 +155,93 @@
     <div class="box-container">
         <div class="box">
             <img src="{{asset('img/icon-1.png')}}" alt="">
-            <h3>food & drinks</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, sunt?</p>
+            <h3>Thức ăn & đồ uống</h3>
+            <p>Thực đơn đa dạng với các món ăn truyền thống và hiện đại, được chế biến bởi đầu bếp chuyên nghiệp.</p>
         </div>
         <div class="box">
             <img src="{{asset('img/icon-2.png')}}" alt="">
-            <h3>outdoor dining</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, sunt?</p>
+            <h3>Ăn ngoài trời</h3>
+            <p>Không gian ăn ngoài trời sang trọng, lý tưởng cho các bữa tiệc và sự kiện ngoài trời.</p>
         </div>
         <div class="box">
             <img src="{{asset('img/icon-3.png')}}" alt="">
-            <h3>beach view</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, sunt?</p>
+            <h3>Khung cảnh bãi biển</h3>
+            <p>Khung cảnh biển tuyệt đẹp, mang lại cảm giác thư giãn và yên bình cho khách hàng.</p>
         </div>
         <div class="box">
             <img src="{{asset('img/icon-4.png')}}" alt="">
-            <h3>decorations</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, sunt?</p>
+            <h3>Trang trí</h3>
+            <p>Không gian trang trí tinh tế, tạo nên sự sang trọng và ấm cúng cho mọi dịp.</p>
         </div>
         <div class="box">
             <img src="{{asset('img/icon-5.png')}}" alt="">
-            <h3>swimming pool</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, sunt?</p>
+            <h3>Tiệc bể bơi</h3>
+            <p>Không gian bể bơi hiện đại, lý tưởng cho các hoạt động thể thao và thư giãn.</p>
         </div>
         <div class="box">
             <img src="{{asset('img/icon-6.png')}}" alt="">
-            <h3>resort beach</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, sunt?</p>
+            <h3>Resort biển</h3>
+            <p>Khung cảnh resort biển tuyệt đẹp, mang lại cảm giác thư giãn và yên bình cho khách hàng.</p>
         </div>
     </div>
 </section>
 <!-- services section ends -->
 <!-- reservation section starts  -->
 <section class="reservation" id="reservation">
+    @if(session()->has('customer'))
     <form action="{{ route('home.store') }}" method="post">
         @csrf
-        <h3>make a reservation</h3>
+        <h3>Dat phong</h3>
         <div class="flex">
-            @foreach($customers as $customer)
-                <div class="box">
-                    <p>your name:<span>*</span></p>
-                    <input value="{{$customer->name}}" type="text" name="name" maxlength="50" required placeholder="enter your name" class="input">
-                </div>
             <div class="box">
-                <p>Your Email:</p>
-                <input value="{{$customer->email}}" type="text" name="name" maxlength="50" required placeholder="enter your name" class="input">
+                <p>Ho ten:<span>*</span></p>
+                <input value="{{session('customer')->name}}" type="text" name="name" maxlength="50" required readonly class="input">
             </div>
             <div class="box">
-                <p>Your Phone Number:</p>
-                <input value="{{$customer->phone}}" type="text" name="name" maxlength="50" required placeholder="enter your name" class="input">
+                <p>Email:<span>*</span></p>
+                <input value="{{session('customer')->email}}" type="text" name="email" maxlength="50" required readonly class="input">
             </div>
-                @endforeach
             <div class="box">
-                <p>check in <span>*</span></p>
+                <p>So dien thoai:<span>*</span></p>
+                <input value="{{session('customer')->phone}}" type="text" name="phone" maxlength="50" required readonly class="input">
+            </div>
+            <div class="box">
+                <p>Check in <span>*</span></p>
                 <input type="datetime-local" name="check_in" class="input" required>
             </div>
             <div class="box">
-                <p>check out <span>*</span></p>
+                <p>Check out <span>*</span></p>
                 <input type="datetime-local" name="check_out" class="input" required>
             </div>
             <div class="box">
-                <p>People <span>*</span></p>
+                <p>So nguoi <span>*</span></p>
                 <select name="people" class="input" required>
-                    <option value="1" selected>1 People</option>
-                    <option value="2">2 people</option>
-                    <option value="3">3 people</option>
-                    <option value="4">4 people</option>
-                    <option value="5">5 people</option>
-                    <option value="6">6 people</option>
+                    <option value="1" selected>1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
                 </select>
             </div>
             <div class="box">
-                <p>Type Room <span>*</span></p>
+                <p>Loai phong <span>*</span></p>
                 <select name="roomtype_id" class="input" required>
                     @foreach($typerooms as $typeroom)
-                        @if($typeroom->id != 2)
-                            <option value="{{ $typeroom->id }}">
-                                {{ $typeroom->name }} - {{ number_format($typeroom->price)  }} (1 day) VND
-                            </option>
-                        @endif
+                        <option value="{{ $typeroom->id }}">
+                            {{ $typeroom->name }} - {{ number_format($typeroom->price_night) }}
+                        </option>
                     @endforeach
                 </select>
             </div>
-            <div class="box">
-                <p>Payment Method <span>*</span></p>
-                <select name="paymentmethod" class="input" required>
-                    <option value="0" selected>Chưa Thanh Toán</option>
-                    <option value="1">Cash</option>
-                    <option value="2">Tranfer</option>
-                </select>
-            </div>
         </div>
-        <input type="submit" value="book now" name="book" class="btn">
+        <input type="submit" value="Dat phong" name="book" class="btn">
     </form>
+    @else
+    <div style="padding:16px 0;">
+        <a href="{{route('customer.login')}}" class="btn">Dang nhap de dat phong</a>
+    </div>
+    @endif
 </section>
 <!-- reservation section ends -->
 <!-- gallery section starts  -->
@@ -265,34 +263,34 @@
 <section class="contact" id="contact">
     <div class="row">
         <form action="" method="post">
-            <h3>send us message</h3>
-            <input type="text" name="name" required maxlength="50" placeholder="enter your name" class="box">
-            <input type="email" name="email" required maxlength="50" placeholder="enter your email" class="box">
-            <input type="number" name="number" required maxlength="10" min="0" max="9999999999" placeholder="enter your number" class="box">
-            <textarea name="message" class="box" required maxlength="1000" placeholder="enter your message" cols="30" rows="10"></textarea>
-            <input type="submit" value="send message" name="send" class="btn">
+            <h3>Liên hệ với chúng tôi</h3>
+            <input type="text" name="name" required maxlength="50" placeholder="Nhập họ tên của bạn" class="box">
+            <input type="email" name="email" required maxlength="50" placeholder="Nhập email của bạn" class="box">
+            <input type="number" name="number" required maxlength="10" min="0" max="9999999999" placeholder="Nhập số điện thoại của bạn" class="box">
+            <textarea name="message" class="box" required maxlength="1000" placeholder="Nhập tin nhắn của bạn" cols="30" rows="10"></textarea>
+            <input type="submit" value="Gửi tin nhắn" name="send" class="btn">
         </form>
         <div class="faq">
-            <h3 class="title">frequently asked questions</h3>
+            <h3 class="title">Câu hỏi thường gặp</h3>
             <div class="box active">
-                <h3>how to cancel?</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus sunt aspernatur excepturi eos! Quibusdam, sapiente.</p>
+                <h3>Hủy đặt phòng thế nào?</h3>
+                <p>Để hủy đặt phòng, bạn cần liên hệ với chúng tôi qua số điện thoại hoặc email trong vòng 24 giờ kể từ thời điểm đặt phòng. Chúng tôi sẽ xử lý yêu cầu hủy phòng của bạn trong vòng 24 giờ làm việc.</p>
             </div>
             <div class="box">
-                <h3>is there any vacancy?</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa ipsam neque quaerat mollitia ratione? Soluta!</p>
+                <h3>Có phòng trống không?</h3>
+                <p>Chúng tôi luôn cập nhật tình trạng phòng trống. Bạn có thể kiểm tra tình trạng phòng trống khi đặt phòng hoặc liên hệ với chúng tôi qua số điện thoại hoặc email.</p>
             </div>
             <div class="box">
-                <h3>what are payment methods?</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa ipsam neque quaerat mollitia ratione? Soluta!</p>
+                <h3>Phương thức thanh toán?</h3>
+                <p>Chúng tôi chấp nhận nhiều phương thức thanh toán như tiền mặt, chuyển khoản ngân hàng, và các phương thức thanh toán trực tuyến.</p>
             </div>
             <div class="box">
-                <h3>how to claim coupons codes?</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa ipsam neque quaerat mollitia ratione? Soluta!</p>
+                <h3>Làm thế nào để sử dụng mã giảm giá?</h3>
+                <p>Khi đặt phòng, bạn có thể nhập mã giảm giá vào ô "Mã giảm giá" trong phần đặt phòng. Mã giảm giá sẽ được áp dụng vào tổng số tiền thanh toán của bạn.</p>
             </div>
             <div class="box">
-                <h3>what are the age requirements?</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa ipsam neque quaerat mollitia ratione? Soluta!</p>
+                <h3>Độ tuổi tối thiểu?</h3>
+                <p>Khách hàng từ 18 tuổi trở lên mới có thể đặt phòng. Nếu bạn là trẻ em dưới 18 tuổi, bạn cần có sự đồng ý của người giám hộ.</p>
             </div>
         </div>
     </div>
@@ -305,32 +303,32 @@
             <div class="swiper-slide box">
                 <img src="{{asset('img/admin1.jpg')}}" alt="">
                 <h3>Nhật Thành</h3>
-                <p>The Chairman of 2T Corporation, a leading company in Vietnam in services and distribution.</p>
+                <p>Chúng tôi luôn cung cấp dịch vụ tốt nhất cho khách hàng.</p>
             </div>
             <div class="swiper-slide box">
                 <img src="{{asset('img/pic-2.png')}}" alt="">
                 <h3>Hoàng Thụ</h3>
-                <p>Production director of 2T company.</p>
+                <p>Chúng tôi luôn cung cấp dịch vụ tốt nhất cho khách hàng.</p>
             </div>
             <div class="swiper-slide box">
                 <img src="{{asset('img/pic-3.png')}}" alt="">
                 <h3>john deo</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates blanditiis optio dignissimos eaque aliquid explicabo.</p>
+                <p>Chúng tôi luôn cung cấp dịch vụ tốt nhất cho khách hàng.</p>
             </div>
             <div class="swiper-slide box">
                 <img src="{{asset('img/pic-4.png')}}" alt="">
                 <h3>john deo</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates blanditiis optio dignissimos eaque aliquid explicabo.</p>
+                <p>Chúng tôi luôn cung cấp dịch vụ tốt nhất cho khách hàng.</p>
             </div>
             <div class="swiper-slide box">
                 <img src="{{asset('img/pic-5.png')}}" alt="">
                 <h3>john deo</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates blanditiis optio dignissimos eaque aliquid explicabo.</p>
+                <p>Chúng tôi luôn cung cấp dịch vụ tốt nhất cho khách hàng.</p>
             </div>
             <div class="swiper-slide box">
                 <img src="{{asset('img/pic-6.png')}}" alt="">
                 <h3>john deo</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates blanditiis optio dignissimos eaque aliquid explicabo.</p>
+                <p>Chúng tôi luôn cung cấp dịch vụ tốt nhất cho khách hàng.</p>
             </div>
         </div>
         <div class="swiper-pagination"></div>
