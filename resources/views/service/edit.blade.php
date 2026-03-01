@@ -9,7 +9,7 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="{{asset('img/icon2.jpg')}}" rel="icon">
+    <link href="{{asset('favicon-home.ico')}}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,12 +48,15 @@
             <div class="col-sm-12 col-xl-12">
                 <div class="bg-secondary rounded h-100 p-4">
 
-                    <form method="post" action="">
+                    <form method="post" action="" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
                         @foreach($services as $service)
                             <div class="mb-3"> <label for="image" class="form-label">Ảnh:</label>
-                                <input type="text" class="form-control" name="image" value="{{$service->image}}"></div>
+                                <input type="hidden" name="existing_image" value="{{ $service->image }}">
+                                <input type="file" class="form-control" name="image" accept="image/*">
+                                <small class="text-muted">Hiện tại: {{ $service->image }}</small>
+                            </div>
                             <div class="mb-3"> <label for="name" class="form-label">Tên dịch vụ:</label>
                                 <input type="text" class="form-control" name="name" value="{{$service->name}}"></div>
                             <div class="mb-3"> <label for="price" class="form-label">Giá:</label>

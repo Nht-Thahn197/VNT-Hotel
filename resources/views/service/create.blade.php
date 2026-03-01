@@ -9,7 +9,7 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="{{asset('img/icon2.jpg')}}" rel="icon">
+    <link href="{{asset('favicon-home.ico')}}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,7 +46,7 @@
         <div class="row g-4">
             <div class="col-sm-12 col-xl-12">
                 <div class="bg-secondary rounded h-100 p-4">
-                    <form method="post" action="{{ Route('service.store') }}">
+                    <form method="post" action="{{ Route('service.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <div class="mb-3">
@@ -54,7 +54,7 @@
                                 <input type="text" maxlength="50" required placeholder="Nhập tên dịch vụ" class="form-control " name="name" required>
                             </div>
                             <label for="image" class="form-label">Ảnh <span>*</span></label>
-                            <input type="text" class="form-control" name="image" required>
+                            <input type="file" class="form-control" name="image" accept="image/*" required>
                         </div>
                         <div class="mb-3">
                             <label for="price" class="form-label">Giá <span>*</span></label>

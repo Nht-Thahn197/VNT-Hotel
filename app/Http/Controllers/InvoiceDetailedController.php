@@ -123,7 +123,7 @@ class InvoiceDetailedController extends Controller
         DB::table('room')->where('id', $room->id)->update(['status' => 2]);
 
         flash()->addInfo('Da check-in va gan phong.');
-        return Redirect::route('booking.index');
+        return Redirect::route('cashier.index', ['room_id' => $room->id]);
     }
 
     /**

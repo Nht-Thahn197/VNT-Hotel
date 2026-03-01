@@ -30,4 +30,35 @@ class BookingController extends Controller
 
         return view('booking.index', ['bookings' => $bookings]);
     }
+
+    public function notifications(Request $request)
+    {
+        $lastId = (int) $request->query('last_id', 0);
+        if ($lastId < 0) {
+            $lastId = 0;
+        }
+
+        $latestId = (int) (DB::table('booking')->max('id') ?? 0);
+        $newCount = 0;
+
+        if ($latestId > $lastId) {
+            $newCount = DB::table('booking')
+                ->where('id', '>', $lastId)
+                ->count();
+        }
+
+        if ($newCount === 1) {
+            $message = 'Có 1 đặt phòng mới';
+        } elseif ($newCount > 1) {
+            $message = 'Có ' . $newCount . ' đặt phòng mới';
+        } else {
+            $message = 'Không có đặt phòng mới';
+        }
+
+        return response()->json([
+            'latest_id' => $latestId,
+            'new_count' => $newCount,
+            'message' => $message,
+        ]);
+    }
 }

@@ -182,4 +182,14 @@ class AdminController extends Controller
             return Redirect::back();
         }
     }
+
+    public function logout(Request $request)
+    {
+        Auth::guard('admin')->logout();
+        $request->session()->forget('admin');
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return Redirect::route('admin.login');
+    }
 }

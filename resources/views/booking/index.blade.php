@@ -9,7 +9,7 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="img/icon2.jpg" rel="icon">
+    <link href="{{asset('favicon-home.ico')}}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -132,9 +132,6 @@
                                         @endif
                                         @if($booking->booking_status == 2)
                                             <a href="{{route('invoice.restore', $booking->id)}}"><button class="btn btn-light">Check-out</button></a>
-                                        @endif
-                                        @if($booking->booking_status == 3 && $booking->invoice_status == 1)
-                                            <a href="{{route('invoice.mini', $booking->id)}}"><button class="btn btn-primary">Thanh toán</button></a>
                                         @endif
                                         @if($booking->invoice_id)
                                             <a href="{{route('invoicedetail.index', ['id' => $booking->invoice_id])}}"><button class="btn btn-secondary">Chi tiết</button></a>

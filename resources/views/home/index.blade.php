@@ -30,7 +30,7 @@
         <a href="home#home">Trang chủ</a>
         <a href="home#about">Giới thiệu</a>
         <a href="home#reservation">Đặt phòng</a>
-        <a href="home#gallery">ình ảnh</a>
+        <a href="home#gallery">Thư Viện ảnh</a>
         <a href="home#contact">Liên hệ</a>
         <a href="home#reviews">Đánh giá</a>
         @if(session()->has('customer'))
@@ -191,10 +191,10 @@
     @if(session()->has('customer'))
     <form action="{{ route('home.store') }}" method="post">
         @csrf
-        <h3>Dat phong</h3>
+        <h3>Đặt phòng</h3>
         <div class="flex">
             <div class="box">
-                <p>Ho ten:<span>*</span></p>
+                <p>Họ & tên:<span>*</span></p>
                 <input value="{{session('customer')->name}}" type="text" name="name" maxlength="50" required readonly class="input">
             </div>
             <div class="box">
@@ -202,7 +202,7 @@
                 <input value="{{session('customer')->email}}" type="text" name="email" maxlength="50" required readonly class="input">
             </div>
             <div class="box">
-                <p>So dien thoai:<span>*</span></p>
+                <p>Số điện thoại:<span>*</span></p>
                 <input value="{{session('customer')->phone}}" type="text" name="phone" maxlength="50" required readonly class="input">
             </div>
             <div class="box">
@@ -214,7 +214,7 @@
                 <input type="datetime-local" name="check_out" class="input" required>
             </div>
             <div class="box">
-                <p>So nguoi <span>*</span></p>
+                <p>Số người <span>*</span></p>
                 <select name="people" class="input" required>
                     <option value="1" selected>1</option>
                     <option value="2">2</option>
@@ -225,7 +225,7 @@
                 </select>
             </div>
             <div class="box">
-                <p>Loai phong <span>*</span></p>
+                <p>Loại phòng <span>*</span></p>
                 <select name="roomtype_id" class="input" required>
                     @foreach($typerooms as $typeroom)
                         <option value="{{ $typeroom->id }}">
@@ -235,11 +235,11 @@
                 </select>
             </div>
         </div>
-        <input type="submit" value="Dat phong" name="book" class="btn">
+        <input type="submit" value="Đặt phòng" name="book" class="btn">
     </form>
     @else
     <div style="padding:16px 0;">
-        <a href="{{route('customer.login')}}" class="btn">Dang nhap de dat phong</a>
+        <a href="{{route('customer.login')}}" class="btn">Đăng nhập để đặt phòng</a>
     </div>
     @endif
 </section>
@@ -262,7 +262,8 @@
 <!-- contact section starts  -->
 <section class="contact" id="contact">
     <div class="row">
-        <form action="" method="post">
+        <form action="{{ route('contact.store') }}" method="post">
+            @csrf
             <h3>Liên hệ với chúng tôi</h3>
             <input type="text" name="name" required maxlength="50" placeholder="Nhập họ tên của bạn" class="box">
             <input type="email" name="email" required maxlength="50" placeholder="Nhập email của bạn" class="box">
@@ -342,5 +343,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 <!-- custom js file link  -->
 <script src="{{asset('js/script.js')}}"></script>
+@if(session('contact_success'))
+<script>
+    swal("Thành công", "{{ session('contact_success') }}", "success");
+</script>
+@endif
 </body>
 </html>

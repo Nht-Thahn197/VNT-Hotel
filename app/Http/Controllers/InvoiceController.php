@@ -204,7 +204,10 @@ class InvoiceController extends Controller
 
         DB::table('booking')->where('id', $booking->id)->update(['booking_status' => 3]);
         if ($booking->room_id) {
-            DB::table('room')->where('id', $booking->room_id)->update(['status' => 0]);
+            DB::table('room')->where('id', $booking->room_id)->update([
+                'status' => 0,
+                'checkin_at' => null,
+            ]);
         }
 
         flash()->addSuccess('Da check-out va lap hoa don.');

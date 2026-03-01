@@ -168,7 +168,11 @@ a:hover {
 .sidebar .navbar .navbar-brand h3 {
     font-family: "Syne", sans-serif;
     font-size: 1.25rem;
-    color: var(--dark) !important;
+    color: var(--primary) !important;
+}
+
+.sidebar .navbar .ms-3 h6 {
+    color: var(--primary);
 }
 
 .sidebar .navbar .navbar-brand i {
@@ -214,9 +218,11 @@ a:hover {
 }
 
 .content .navbar .navbar-nav .nav-link {
+    display: flex;
     margin-left: 18px;
     padding: 12px 0;
     color: #495569;
+    align-items: center;
 }
 
 .content .navbar .navbar-nav .nav-link:hover,
@@ -242,6 +248,16 @@ a:hover {
 .content .navbar .dropdown-item:hover,
 .content .navbar .dropdown-item.active {
     background: rgba(15, 23, 42, 0.06);
+}
+
+.content .navbar .dropdown-item.message-new {
+    color: #1d9bf0;
+    font-weight: 700;
+}
+
+.content .navbar .dropdown-item .message-new-text {
+    color: #f97316;
+    font-weight: 700;
 }
 
 .content .navbar .dropdown-toggle::after {
@@ -280,9 +296,122 @@ a:hover {
 }
 
 .form-select {
-    appearance: auto;
-    background-image: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
     cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='10' viewBox='0 0 14 10'%3E%3Cpath d='M2 2l5 5 5-5' fill='none' stroke='%23334155' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 14px 10px;
+    padding-right: 42px;
+}
+
+select.input {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='10' viewBox='0 0 14 10'%3E%3Cpath d='M2 2l5 5 5-5' fill='none' stroke='%23334155' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 14px 10px;
+    padding-right: 42px;
+    cursor: pointer;
+}
+
+.form-select::-ms-expand,
+select.input::-ms-expand {
+    display: none;
+}
+
+.custom-select {
+    position: relative;
+    width: 100%;
+}
+
+.custom-select-native {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.custom-select-trigger {
+    width: 100%;
+    text-align: left;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: #1f2937;
+    padding: 0.7rem 42px 0.7rem 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+}
+
+.custom-select-trigger::after {
+    content: "";
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    width: 14px;
+    height: 10px;
+    transform: translateY(-50%);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='10' viewBox='0 0 14 10'%3E%3Cpath d='M2 2l5 5 5-5' fill='none' stroke='%23334155' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: 14px 10px;
+}
+
+.custom-select.is-open .custom-select-trigger::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.custom-select.is-disabled .custom-select-trigger {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.custom-select-list {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 6px);
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 6px;
+    max-height: 240px;
+    overflow-y: auto;
+    display: none;
+    z-index: 20;
+}
+
+.custom-select.is-open .custom-select-list {
+    display: block;
+}
+
+.custom-select-option {
+    width: 100%;
+    text-align: left;
+    border: none;
+    background: transparent;
+    padding: 10px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.custom-select-option:hover,
+.custom-select-option.is-selected {
+    background: rgba(29, 155, 240, 0.12);
+    color: #1f2937;
+}
+
+.custom-select-option:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .form-control:focus,

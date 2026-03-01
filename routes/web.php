@@ -39,6 +39,7 @@ Route::middleware('adminMiddleware')->prefix('admin')->group(function (){
 //Log in
 Route::get('/login-admin', [\App\Http\Controllers\AdminController::class, 'login']) ->name('admin.login');
 Route::post('/login-admin', [\App\Http\Controllers\AdminController::class, 'loginProcess']) ->name('admin.loginProcess');
+Route::get('/logout-admin', [\App\Http\Controllers\AdminController::class, 'logout'])->name('admin.logout');
 
 Route::get('/login-customer', [\App\Http\Controllers\CustomerController::class, 'login']) ->name('customer.login');
 Route::post('/login-customer', [\App\Http\Controllers\CustomerController::class, 'loginProcess']) ->name('customer.loginProcess');
@@ -71,6 +72,17 @@ Route::middleware('adminMiddleware')->prefix('invoice')->group(function (){
 
 // Booking
 Route::middleware('adminMiddleware')->get('/booking', [\App\Http\Controllers\BookingController::class, 'index'])->name('booking.index');
+Route::middleware('adminMiddleware')->get('/booking/notifications', [\App\Http\Controllers\BookingController::class, 'notifications'])->name('booking.notifications');
+
+// Contact
+Route::post('/contact', [\App\Http\Controllers\ContactMessageController::class, 'store'])->name('contact.store');
+Route::middleware('adminMiddleware')->get('/messages', [\App\Http\Controllers\ContactMessageController::class, 'index'])->name('messages.index');
+Route::middleware('adminMiddleware')->get('/messages/notifications', [\App\Http\Controllers\ContactMessageController::class, 'notifications'])->name('messages.notifications');
+
+// Cashier
+Route::middleware('adminMiddleware')->get('/cashier', [\App\Http\Controllers\CashierController::class, 'index'])->name('cashier.index');
+Route::middleware('adminMiddleware')->post('/cashier/checkin', [\App\Http\Controllers\CashierController::class, 'checkin'])->name('cashier.checkin');
+Route::middleware('adminMiddleware')->post('/cashier/checkout', [\App\Http\Controllers\CashierController::class, 'checkout'])->name('cashier.checkout');
 
 // Invoice Detail
 Route::middleware('adminMiddleware')->prefix('invoicedetail')->group(function (){

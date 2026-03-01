@@ -48,7 +48,17 @@ class ServiceController extends Controller
         $obj = new Service();
         //Lấy dữ liệu
         $obj->name = $request->name;
-        $obj->image = $request->image;
+        $imageName = '';
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $file = $request->file('image');
+            $baseName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeBase = preg_replace('/[^a-zA-Z0-9_-]+/', '-', $baseName);
+            $safeBase = $safeBase ?: 'service';
+            $extension = $file->getClientOriginalExtension();
+            $imageName = $safeBase . '-' . time() . '.' . $extension;
+            $file->move(public_path('img'), $imageName);
+        }
+        $obj->image = $imageName;
         $obj->price = $request->price;
         $obj->description = $request->description;
         //Gọi function để lưu dữ liệu lên db trong model
@@ -103,7 +113,17 @@ class ServiceController extends Controller
         //Lay du lieu
         $obj->id = $request->id;
         $obj->name = $request->name;
-        $obj->image = $request->image;
+        $imageName = $request->input('existing_image', '');
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $file = $request->file('image');
+            $baseName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeBase = preg_replace('/[^a-zA-Z0-9_-]+/', '-', $baseName);
+            $safeBase = $safeBase ?: 'service';
+            $extension = $file->getClientOriginalExtension();
+            $imageName = $safeBase . '-' . time() . '.' . $extension;
+            $file->move(public_path('img'), $imageName);
+        }
+        $obj->image = $imageName;
         $obj->price = $request->price;
         $obj->description = $request->description;
         // Goi function update du lieu trong model
