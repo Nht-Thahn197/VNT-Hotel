@@ -1,66 +1,139 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# VNT Hotel Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+VNT Hotel Management System is a full-stack hotel operations web application built with Laravel 9, PHP 8, Blade, and MySQL. It combines a customer-facing booking website with an internal back-office workspace for hotel staff, covering reservations, room inventory, guest records, service sales, invoicing, and contact management.
 
-## About Laravel
+For recruiters, this repository demonstrates more than basic CRUD. The project implements real business workflows such as reservation validation, room availability checks, check-in/check-out operations, dynamic pricing, and invoice generation inside a practical server-rendered application.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Recruiter Snapshot
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- End-to-end booking flow from customer reservation to staff checkout
+- Separate admin and customer authentication flows using Laravel guards and middleware
+- Overbooking prevention based on room-type inventory and overlapping booking windows
+- Cashier workflow for room status tracking, service add-ons, and payment handling
+- Relational database design covering rooms, room types, floors, bookings, invoices, customers, admins, services, and contact messages
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Main Features
 
-## Learning Laravel
+### Customer-facing features
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- Public hotel landing page with room and service presentation
+- Customer login and booking history
+- Reservation form with check-in/check-out datetime selection
+- Capacity validation based on room type
+- Contact form with messages stored for staff review
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Back-office features
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Admin dashboard with operational summary metrics
+- Room, room type, floor, service, customer, and admin management
+- Booking review and confirmation workflow
+- Cashier interface for live room status, check-in, checkout, and service charges
+- Invoice management with payment status updates
+- Booking and contact-message notification endpoints for admin monitoring
 
-## Laravel Sponsors
+### Business logic highlights
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+- Room availability is calculated by comparing overlapping reservations against the actual number of rooms available for a room type
+- Checkout supports hourly, overnight, and daily pricing rules
+- Service items can be added during checkout and rolled into the final invoice
+- Staff can process walk-in guests as well as reserved bookings
 
-### Premium Partners
+## Tech Stack
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+- Backend: PHP 8, Laravel 9
+- Frontend: Blade templates, Bootstrap, custom CSS, vanilla JavaScript, Vite
+- Database: MySQL / MariaDB
+- Libraries: Guzzle, Laravel Sanctum, PHP Flasher
+- Application style: MVC, server-rendered views, session-based authentication
 
-## Contributing
+## Project Modules
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Public website: hotel homepage, reservation form, contact section
+- Customer area: login, reservation history, booking cancellation
+- Admin area: dashboard, rooms, room types, floors, services, customers, admins
+- Operations: booking confirmation, cashier workflow, invoice handling
+- Messaging: contact inbox and booking/message notifications
 
-## Code of Conduct
+## Run Locally
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Prerequisites
 
-## Security Vulnerabilities
+- PHP 8+
+- Composer
+- Node.js and npm
+- MySQL or MariaDB
+- XAMPP or an equivalent local PHP/MySQL environment
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Setup
 
-## License
+1. Install PHP dependencies:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+composer install
+```
+
+2. Install frontend dependencies:
+
+```bash
+npm install
+```
+
+3. Create the environment file and application key:
+
+```bash
+copy .env.example .env
+php artisan key:generate
+```
+
+4. Configure the database in `.env`.
+
+Recommended local database values:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=vnt_hotel
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+5. Create a database named `vnt_hotel`.
+
+6. Import `database/vnt_hotel.sql` into the `vnt_hotel` database with phpMyAdmin or the MySQL CLI.
+
+The SQL dump is the fastest way to reproduce the current demo data and schema. The repository also includes Laravel migrations and seeders for core entities.
+
+7. Start the application:
+
+```bash
+php artisan serve
+npm run dev
+```
+
+8. Open the project in your browser:
+
+- Public site: `http://127.0.0.1:8000/home`
+- Admin login: `http://127.0.0.1:8000/login-admin`
+- Customer login: `http://127.0.0.1:8000/login-customer`
+
+## What This Project Demonstrates
+
+- Building a complete business workflow, not just isolated CRUD pages
+- Translating hotel operations into application rules and database relationships
+- Handling multiple user roles in a Laravel application
+- Designing practical internal tools for staff operations
+- Combining product-facing pages and operational dashboards in one codebase
+
+## Notes
+
+- The UI content is primarily tailored to a Vietnamese hotel context, while this README is written in English for technical review
+- The included SQL dump contains sample data that makes the project easier to review locally
+- PHPUnit scaffolding is present, but automated test coverage is still limited
+
+## Repository Entry Points
+
+- Main routes: `routes/web.php`
+- Controllers: `app/Http/Controllers`
+- Views: `resources/views`
+- Database dump: `database/vnt_hotel.sql`
